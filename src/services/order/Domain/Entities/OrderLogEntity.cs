@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using AllRoadsLeadToRome.Core.Enums;
 
-namespace Domain.Entities
+namespace AllRoadsLeadToRome.Service.Order.Domain.Entities
 {
     public class OrderLogEntity
     {

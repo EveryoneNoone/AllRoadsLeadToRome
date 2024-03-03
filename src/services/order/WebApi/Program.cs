@@ -1,13 +1,71 @@
+using AllRoadsLeadToRome.Service.Order.Application;
+using AllRoadsLeadToRome.Service.Order.Infrastructure;
+using AllRoadsLeadToRome.Service.Order.Infrastructure.Context;
+using Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var problemDetails = new ValidationProblemDetails(context.ModelState);
+        var error = problemDetails.Errors.FirstOrDefault();
+        var message = "Bad request";
+        if (error.Value.Length > 0)
+        {
+            message = $"{error.Value[0]}";
+
+            if (!message.Contains(error.Key))
+            {
+                message = $"{error.Key}: {message}";
+            }
+        }
+
+        return new ObjectResult(new { message = $"{message}" })
+        {
+            StatusCode = 400,
+        };
+    };
+});
+
+builder.Services.AddDbContext<OrderDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DB"));
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var problemDetails = new ValidationProblemDetails(context.ModelState);
+        var error = problemDetails.Errors.FirstOrDefault();
+        var message = "Bad request";
+        if (error.Value.Length > 0)
+        {
+            message = $"{error.Value[0]}";
+
+            if (!message.Contains(error.Key))
+            {
+                message = $"{error.Key}: {message}";
+            }
+        }
+
+        return new ObjectResult(new { message = $"{message}" })
+        {
+            StatusCode = 400,
+        };
+    });
+
+ServicesIoC.ConfigureServices(builder.Services);
+InfrastructureConfigureServices.ConfigureServices(builder.Services);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,29 +74,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.MapControllers();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

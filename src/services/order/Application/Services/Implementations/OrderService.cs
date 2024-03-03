@@ -1,7 +1,8 @@
-﻿using Application.Repositories.Interfaces;
-using Application.Services.Interfaces;
+﻿using AllRoadsLeadToRome.Service.Order.Application.Dtos;
+using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
+using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
 
-namespace Application.Services.Implementations;
+namespace AllRoadsLeadToRome.Service.Order.Application.Services.Implementations;
 
 public class OrderService : IOrderService
 {
@@ -12,8 +13,8 @@ public class OrderService : IOrderService
         _orderRepository = orderRepository;
     }
 
-    public async Task Create(CancellationToken ct)
+    public async Task<int> Create(AddOrderRequestDto request, CancellationToken ct)
     {
-        await _orderRepository.Create(ct);
+        return await _orderRepository.Create(request, ct);
     }
 }

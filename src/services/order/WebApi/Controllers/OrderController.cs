@@ -1,10 +1,11 @@
-﻿using Application.Services.Interfaces;
+﻿using AllRoadsLeadToRome.Service.Order.Application.Dtos;
+using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers;
+namespace AllRoadsLeadToRome.Service.Order.WebApi.Controllers;
 
 [ApiController]
-[Route("order")]
+[Route("api/order")]
 public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;
@@ -18,9 +19,9 @@ public class OrderController : ControllerBase
         HttpPost,
         Route("")
     ]
-    public async Task<dynamic> Create(CancellationToken ct = default)
+    public async Task<ActionResult<int>> Create([FromBody] AddOrderRequestDto request, CancellationToken ct = default)
     {
-        await _orderService.Create(ct);
-        return Ok();
+        var id = await _orderService.Create(request, ct);
+        return Ok(id);
     }
 }
