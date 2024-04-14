@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrustructure
 {
-    internal class Push
+    internal class Push : IReceiverInfo
     {
+        public string Receiver { get; set; }
+        public string Data { get; set; }
     }
 }

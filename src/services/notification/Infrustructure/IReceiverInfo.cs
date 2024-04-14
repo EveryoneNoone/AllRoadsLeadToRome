@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application
+namespace Infrustructure
 {
-    internal class SendPush
+    public interface IReceiverInfo
     {
+        string Receiver {  get; set; }
+        string Data { get; set; }
     }
 }

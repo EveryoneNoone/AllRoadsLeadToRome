@@ -14,7 +14,7 @@ namespace NotificationService
         private IBusControl busControl;
         private readonly ILogger<HostService> logger;
 
-        public HostService(IBusControl busControl, ILogger<HostService> logger)
+        public HostService(ILogger<HostService> logger, IBusControl busControl)
         {
             this.busControl = busControl;
             this.logger = logger;

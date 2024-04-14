@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrustructure
 {
-    public class Sms
+    public class Sms : IReceiverInfo
     {
-        public string Text { get; set; }
-        public string Phone { get;set; }
+        public string Receiver { get; set; }
+        public string Data { get; set; }
     }
 }

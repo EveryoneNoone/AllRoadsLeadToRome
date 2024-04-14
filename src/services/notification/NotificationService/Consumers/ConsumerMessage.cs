@@ -10,9 +10,10 @@ namespace Application.Consumers
 {
     public class ConsumerMessage : IConsumer<MessageDto>
     {
-        public Task Consume(ConsumeContext<MessageDto> context)
+        public async Task Consume(ConsumeContext<MessageDto> context)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("I'm in");
+            //return Task.CompletedTask;
         }
     }
 }

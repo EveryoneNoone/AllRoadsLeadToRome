@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrustructure
 {
-    public class Email
+    public class Email : IReceiverInfo
     {
+        public string Receiver { get; set; }
+        public string Data { get; set; }
     }
 }
