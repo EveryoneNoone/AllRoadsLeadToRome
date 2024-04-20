@@ -1,6 +1,9 @@
 
-using Infrastructure.Data;
+using Infrastructure;
+using Infrastructure.Context;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace WebApi
 {
@@ -10,12 +13,19 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+                var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // Add services to the container.
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfCoreRepository<>));
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging();
+            });
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            // Configure Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -29,11 +39,21 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
+            //app.UseAuthorization();
             app.MapControllers();
+
+            using var scope = app.Services.CreateScope();
+            var serviceProvider = scope.ServiceProvider;
+            try
+            {
+                var context = serviceProvider.GetRequiredService<AppDbContext>();
+                DbInitializer.Initialize(context);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Заменить в будущем на Logger
+                Console.WriteLine(ex);
+            }
 
             app.Run();
         }
