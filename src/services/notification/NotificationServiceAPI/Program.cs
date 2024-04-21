@@ -7,33 +7,50 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build().Run();
+        //CreateHostBuilder(args).Build().Run();
 
-        //var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
-        //// Add services to the container.
+        // Add services to the container.
 
-        //builder.Services.AddControllers();
-        //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        //builder.Services.AddEndpointsApiExplorer();
-        //builder.Services.AddSwaggerGen();
+        builder.Services.AddControllers();
+        //Learn more about configuring Swagger / OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-        //var app = builder.Build();
+        //IConfiguration configuration = new ConfigurationBuilder()
+        //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        //    .AddEnvironmentVariables()
+        //    .Build();
 
-        //// Configure the HTTP request pipeline.
-        //if (app.Environment.IsDevelopment())
-        //{
-        //    app.UseSwagger();
-        //    app.UseSwaggerUI();
-        //}
+        builder.Services.AddMassTransit(x =>
+        {
+            x.AddConsumer<ConsumerMessage>();
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                ConfigureRMQ(cfg, builder.Configuration);
+                RegisterEndpoints(cfg);
+            });
+        });
+        builder.Services.AddHostedService<HostService>();
 
-        //app.UseHttpsRedirection();
+        var app = builder.Build();
 
-        //app.UseAuthorization();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-        //app.MapControllers();
+        app.UseHttpsRedirection();
 
-        //app.Run();        
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+
+        app.Run();
     }
 
     private static IHostBuilder CreateHostBuilder(string[] args)
