@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\..\AllRoadsLeadToRome.Core.Db\AllRoadsLeadToRome.Core.Db.csproj" />
       <ProjectReference Include="..\..\..\shared\AllRoadsLeadToRome.Core\AllRoadsLeadToRome.Core.csproj" />
     </ItemGroup>
 

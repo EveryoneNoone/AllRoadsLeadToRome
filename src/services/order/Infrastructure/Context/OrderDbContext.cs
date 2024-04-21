@@ -8,8 +8,14 @@ public class OrderDbContext : DbContext
     public OrderDbContext(DbContextOptions<OrderDbContext> options)
         : base(options)
     { }
-
-    public DbSet<AddressEntity> Addresses { get; set; } = null!;
+    
+    // public OrderDbContext()
+    // { }
+    //
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=123456");
+    // }
     public DbSet<OrderEntity> Orders { get; set; } = null!;
     public DbSet<OrderLogEntity> OrderLogs { get; set; } = null!;
 }
