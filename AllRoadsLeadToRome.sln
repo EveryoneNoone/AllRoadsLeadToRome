@@ -34,13 +34,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "src\services\notification\NotificationService\NotificationService.csproj", "{1FD35434-8C86-4406-A122-D77DB2FDCBB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService", "src\services\notification\NotificationService\NotificationService.csproj", "{1FD35434-8C86-4406-A122-D77DB2FDCBB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrustructure", "src\services\notification\Infrustructure\Infrustructure.csproj", "{2E78FB41-00CC-409D-BF53-7EA60218A6C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrustructure", "src\services\notification\Infrustructure\Infrustructure.csproj", "{2E78FB41-00CC-409D-BF53-7EA60218A6C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\services\notification\Application\Application.csproj", "{8DBAAE1D-B980-4975-B4BE-B229E2686E55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\notification\Application\Application.csproj", "{8DBAAE1D-B980-4975-B4BE-B229E2686E55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationServiceTests", "src\services\notification\NotificationServiceTests\NotificationServiceTests.csproj", "{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationServiceTests", "src\services\notification\NotificationServiceTests\NotificationServiceTests.csproj", "{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationServiceAPI", "src\services\notification\NotificationServiceAPI\NotificationServiceAPI.csproj", "{CD15343E-47F6-4AA6-B924-65D47BA6A96D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +124,7 @@ Global
 		{2E78FB41-00CC-409D-BF53-7EA60218A6C8} = {331CB637-0D48-4729-BFF5-610011F218B0}
 		{8DBAAE1D-B980-4975-B4BE-B229E2686E55} = {331CB637-0D48-4729-BFF5-610011F218B0}
 		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6} = {331CB637-0D48-4729-BFF5-610011F218B0}
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D} = {331CB637-0D48-4729-BFF5-610011F218B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCC9BF43-D064-43E4-A3F9-9159E535298E}

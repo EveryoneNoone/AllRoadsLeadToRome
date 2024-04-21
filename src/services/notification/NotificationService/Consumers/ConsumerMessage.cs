@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using CommonNamespace;
 using MassTransit;
 using System;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace Application.Consumers
 {
     public class ConsumerMessage : IConsumer<MessageDto>
     {
-        public async Task Consume(ConsumeContext<MessageDto> context)
+        public Task Consume(ConsumeContext<MessageDto> context)
         {
             Console.WriteLine("I'm in");
-            //return Task.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

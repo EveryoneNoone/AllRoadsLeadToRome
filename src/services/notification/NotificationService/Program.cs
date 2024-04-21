@@ -1,10 +1,11 @@
 ﻿using MassTransit;
 using Infrustructure.Settings;
 using Microsoft.Extensions.Configuration;
-using Application.Consumers;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NotificationService;
+using CommonNamespace;
+using Application.Consumers;
 
 namespace NotificationService
 {
