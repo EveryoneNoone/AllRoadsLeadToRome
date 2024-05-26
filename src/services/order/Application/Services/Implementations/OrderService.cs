@@ -2,6 +2,7 @@
 using AllRoadsLeadToRome.Service.Order.Application.Dtos;
 using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
+using MassTransit;
 
 namespace AllRoadsLeadToRome.Service.Order.Application.Services.Implementations;
 

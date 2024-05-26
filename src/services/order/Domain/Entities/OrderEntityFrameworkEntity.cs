@@ -3,7 +3,7 @@ using AllRoadsLeadToRome.Core.Enums;
 
 namespace AllRoadsLeadToRome.Service.Order.Domain.Entities
 {
-    public class OrderEntity : BaseEntity
+    public class OrderEntityFrameworkEntity : BaseEntityFrameworkEntity
     {
         public string AddressFrom { get; set; }
         public string AddressTo { get; set; }
@@ -12,7 +12,7 @@ namespace AllRoadsLeadToRome.Service.Order.Domain.Entities
         public int DeliveryUserId { get; set; }
         public decimal Weight { get; set; }
         public decimal DeliveryCost { get; set; }
-        public virtual ICollection<OrderLogEntity> OrderLogs { get; set; }
+        public virtual ICollection<OrderLogEntityFrameworkEntity> OrderLogs { get; set; }
         public DateTime CompletedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
     }

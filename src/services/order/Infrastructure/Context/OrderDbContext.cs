@@ -9,13 +9,13 @@ public class OrderDbContext : DbContext
         : base(options)
     { }
     
-    // public OrderDbContext()
-    // { }
-    //
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=123456");
-    // }
-    public DbSet<OrderEntity> Orders { get; set; } = null!;
-    public DbSet<OrderLogEntity> OrderLogs { get; set; } = null!;
+    public OrderDbContext()
+    { }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=123456");
+    }
+    public DbSet<OrderEntityFrameworkEntity> Orders { get; set; } = null!;
+    public DbSet<OrderLogEntityFrameworkEntity> OrderLogs { get; set; } = null!;
 }
