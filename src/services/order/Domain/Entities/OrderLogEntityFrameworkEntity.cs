@@ -5,10 +5,10 @@ using AllRoadsLeadToRome.Core.Enums;
 
 namespace AllRoadsLeadToRome.Service.Order.Domain.Entities
 {
-    public class OrderLogEntity : BaseEntity
+    public class OrderLogEntityFrameworkEntity : BaseEntityFrameworkEntity
     {
         [ForeignKey("Order")] public int OrderId { get; set; } 
-        public virtual OrderEntity Order { get; set; } = null!;
+        public virtual OrderEntityFrameworkEntity Order { get; set; } = null!;
         public OrderStatus OrderStatus { get; set; }
     }
 }

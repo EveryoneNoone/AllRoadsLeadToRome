@@ -5,7 +5,7 @@ using AllRoadsLeadToRome.Service.Order.Infrastructure.Context;
 
 namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Repositories.Implementations;
 
-public class OrderLogRepository : EntityFrameworkRepository<OrderLogEntity>, IOrderLogRepository
+public class OrderLogRepository : EntityFrameworkRepository<OrderLogEntityFrameworkEntity>, IOrderLogRepository
 {
     private readonly OrderDbContext _dbContext;
 
@@ -15,9 +15,9 @@ public class OrderLogRepository : EntityFrameworkRepository<OrderLogEntity>, IOr
     }
 
 
-    public async Task Create(OrderEntity order, CancellationToken ct)
+    public async Task Create(OrderEntityFrameworkEntity order, CancellationToken ct)
     {
-        await Add(new OrderLogEntity
+        await Add(new OrderLogEntityFrameworkEntity
         {
             OrderId = order.Id,
             OrderStatus = order.Status,

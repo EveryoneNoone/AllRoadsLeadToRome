@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationServiceAPI", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.Db", "AllRoadsLeadToRome.Core.Db\AllRoadsLeadToRome.Core.Db.csproj", "{6BE75885-498C-4FD6-806B-76A23DAD8309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.MassTransit", "AllRoadsLeadToRome.Core.MassTransit\AllRoadsLeadToRome.Core.MassTransit.csproj", "{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +108,10 @@ Global
 		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +131,7 @@ Global
 		{8DBAAE1D-B980-4975-B4BE-B229E2686E55} = {331CB637-0D48-4729-BFF5-610011F218B0}
 		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6} = {331CB637-0D48-4729-BFF5-610011F218B0}
 		{CD15343E-47F6-4AA6-B924-65D47BA6A96D} = {331CB637-0D48-4729-BFF5-610011F218B0}
+		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCC9BF43-D064-43E4-A3F9-9159E535298E}

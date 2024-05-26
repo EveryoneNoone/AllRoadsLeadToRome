@@ -5,5 +5,5 @@ namespace AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 
 public interface IOrderLogRepository
 { 
-    Task Create(OrderEntity order, CancellationToken ct);
+    Task Create(OrderEntityFrameworkEntity order, CancellationToken ct);
 }

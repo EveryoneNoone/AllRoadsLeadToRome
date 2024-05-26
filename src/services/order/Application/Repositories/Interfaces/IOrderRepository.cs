@@ -6,8 +6,8 @@ namespace AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 
 public interface IOrderRepository
 { 
-    Task<OrderEntity> Create(AddOrderRequestDto request, CancellationToken ct);
-    Task<OrderEntity> GetById(int id, CancellationToken ct);
-    Task<IEnumerable<OrderEntity>> GetAll(CancellationToken ct);
+    Task<OrderEntityFrameworkEntity> Create(AddOrderRequestDto request, CancellationToken ct);
+    Task<OrderEntityFrameworkEntity> GetById(int id, CancellationToken ct);
+    Task<IEnumerable<OrderEntityFrameworkEntity>> GetAll(CancellationToken ct);
     Task ChangeStatus(int id, OrderStatus newStatus, CancellationToken ct);
 }

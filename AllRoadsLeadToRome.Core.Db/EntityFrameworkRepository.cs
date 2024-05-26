@@ -2,7 +2,7 @@
 
 namespace AllRoadsLeadToRome.Core.Db;
 
-public class EntityFrameworkRepository<T> where T : BaseEntity
+public class EntityFrameworkRepository<T> where T : BaseEntityFrameworkEntity
 {
     private readonly DbContext _context;
     private readonly DbSet<T> _dbSet;
