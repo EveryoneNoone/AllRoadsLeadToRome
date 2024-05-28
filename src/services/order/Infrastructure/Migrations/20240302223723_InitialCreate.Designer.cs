@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20240421200142_InitialCreate")]
+    [Migration("20240302223723_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AllRoadsLeadToRome.Service.Order.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Domain.Entities.AddressEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,13 +33,43 @@ namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AddressFrom")
+                    b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("AddressTo")
+                    b.Property<string>("House")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Region")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrderEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AddressFromId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AddressToId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CompletedDate")
                         .HasColumnType("timestamp with time zone");
@@ -56,9 +86,6 @@ namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
                     b.Property<int>("DeliveryUserId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -67,16 +94,17 @@ namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressFromId");
+
+                    b.HasIndex("AddressToId");
+
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("AllRoadsLeadToRome.Service.Order.Domain.Entities.OrderLogEntity", b =>
+            modelBuilder.Entity("Domain.Entities.OrderLogEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -94,9 +122,28 @@ namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
                     b.ToTable("OrderLogs");
                 });
 
-            modelBuilder.Entity("AllRoadsLeadToRome.Service.Order.Domain.Entities.OrderLogEntity", b =>
+            modelBuilder.Entity("Domain.Entities.OrderEntity", b =>
                 {
-                    b.HasOne("AllRoadsLeadToRome.Service.Order.Domain.Entities.OrderEntity", "Order")
+                    b.HasOne("Domain.Entities.AddressEntity", "AddressFrom")
+                        .WithMany()
+                        .HasForeignKey("AddressFromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.AddressEntity", "AddressTo")
+                        .WithMany()
+                        .HasForeignKey("AddressToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AddressFrom");
+
+                    b.Navigation("AddressTo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrderLogEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.OrderEntity", "Order")
                         .WithMany("OrderLogs")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -105,7 +152,7 @@ namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("AllRoadsLeadToRome.Service.Order.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Domain.Entities.OrderEntity", b =>
                 {
                     b.Navigation("OrderLogs");
                 });

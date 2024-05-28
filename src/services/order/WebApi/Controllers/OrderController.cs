@@ -1,5 +1,4 @@
-﻿using AllRoadsLeadToRome.Core.Enums;
-using AllRoadsLeadToRome.Service.Order.Application.Dtos;
+﻿using AllRoadsLeadToRome.Service.Order.Application.Dtos;
 using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,35 +23,5 @@ public class OrderController : ControllerBase
     {
         var id = await _orderService.Create(request, ct);
         return Ok(id);
-    }
-
-    [
-        HttpGet,
-        Route("{id}")
-    ]
-    public async Task<ActionResult<int>> GetById(int id, CancellationToken ct = default)
-    {
-        var order = await _orderService.GetById(id, ct);
-        return Ok(order);
-    }
-
-    [
-        HttpGet,
-        Route("")
-    ]
-    public async Task<ActionResult<int>> GetAll(CancellationToken ct = default)
-    {
-        var all = await _orderService.GetAll(ct);
-        return Ok(all);
-    }
-
-    [
-        HttpPatch,
-        Route("{id}/complete")
-    ]
-    public async Task<ActionResult<int>> MakeCompleted(int id, CancellationToken ct = default)
-    {
-        await _orderService.ChangeStatus(id, OrderStatus.Completed, ct);
-        return Ok();
     }
 }
