@@ -19,13 +19,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllRoadsLeadToRome.Core", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth", "auth", "{EE915431-4AE4-431A-83DE-77F32A3497E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\services\auth\Core\Core.csproj", "{44B3D5C4-1492-486C-9925-4EFED6E84BA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\services\auth\Core\Core.csproj", "{44B3D5C4-1492-486C-9925-4EFED6E84BA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\services\auth\Infrastructure\Infrastructure.csproj", "{C9FAC201-8C5B-43F8-BFB2-5F27740D696F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\services\auth\Infrastructure\Infrastructure.csproj", "{C9FAC201-8C5B-43F8-BFB2-5F27740D696F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\services\auth\Application\Application.csproj", "{22FFD334-14FE-49DF-9D23-BD31DFB4B199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\auth\Application\Application.csproj", "{22FFD334-14FE-49DF-9D23-BD31DFB4B199}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\services\auth\WebApi\WebApi.csproj", "{AAB524B3-5792-4046-AB8D-06022C1DCA87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\services\auth\WebApi\WebApi.csproj", "{AAB524B3-5792-4046-AB8D-06022C1DCA87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "notification", "notification", "{331CB637-0D48-4729-BFF5-610011F218B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8202D5E5-3615-4531-8109-01DEC6F1F8C8}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrustructure", "src\services\notification\Infrustructure\Infrustructure.csproj", "{2E78FB41-00CC-409D-BF53-7EA60218A6C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\notification\Application\Application.csproj", "{8DBAAE1D-B980-4975-B4BE-B229E2686E55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationServiceTests", "src\services\notification\NotificationServiceTests\NotificationServiceTests.csproj", "{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationServiceAPI", "src\services\notification\NotificationServiceAPI\NotificationServiceAPI.csproj", "{CD15343E-47F6-4AA6-B924-65D47BA6A96D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.Db", "AllRoadsLeadToRome.Core.Db\AllRoadsLeadToRome.Core.Db.csproj", "{6BE75885-498C-4FD6-806B-76A23DAD8309}"
 EndProject
@@ -73,14 +88,22 @@ Global
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BE75885-498C-4FD6-806B-76A23DAD8309}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E78FB41-00CC-409D-BF53-7EA60218A6C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E78FB41-00CC-409D-BF53-7EA60218A6C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E78FB41-00CC-409D-BF53-7EA60218A6C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E78FB41-00CC-409D-BF53-7EA60218A6C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DBAAE1D-B980-4975-B4BE-B229E2686E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DBAAE1D-B980-4975-B4BE-B229E2686E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DBAAE1D-B980-4975-B4BE-B229E2686E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DBAAE1D-B980-4975-B4BE-B229E2686E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,8 +118,10 @@ Global
 		{C9FAC201-8C5B-43F8-BFB2-5F27740D696F} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
 		{22FFD334-14FE-49DF-9D23-BD31DFB4B199} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
-		{6BE75885-498C-4FD6-806B-76A23DAD8309} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
-		{4C9DBE5C-FDCD-4F45-BDE6-BB478F03B17C} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
+		{2E78FB41-00CC-409D-BF53-7EA60218A6C8} = {331CB637-0D48-4729-BFF5-610011F218B0}
+		{8DBAAE1D-B980-4975-B4BE-B229E2686E55} = {331CB637-0D48-4729-BFF5-610011F218B0}
+		{6794DFA4-1071-4A46-90F5-DA9F732D8FD6} = {331CB637-0D48-4729-BFF5-610011F218B0}
+		{CD15343E-47F6-4AA6-B924-65D47BA6A96D} = {331CB637-0D48-4729-BFF5-610011F218B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCC9BF43-D064-43E4-A3F9-9159E535298E}
