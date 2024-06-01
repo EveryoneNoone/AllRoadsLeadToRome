@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit" Version="8.2.3-develop.1821" />
+      <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3-develop.1821" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\shared\AllRoadsLeadToRome.Core\AllRoadsLeadToRome.Core.csproj" />
+    </ItemGroup>
+
+</Project>
