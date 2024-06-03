@@ -3,6 +3,7 @@ using AllRoadsLeadToRome.Service.Order.Application.Dtos;
 using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
 using MassTransit;
+using OrderApi;
 
 namespace AllRoadsLeadToRome.Service.Order.Application.Services.Implementations;
 
@@ -10,15 +11,31 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IOrderLogRepository _orderLogRepository;
+    private readonly OrderGrpc.OrderGrpcClient _grpcClient;
 
-    public OrderService(IOrderRepository orderRepository, IOrderLogRepository orderLogRepository)
+    public OrderService(IOrderRepository orderRepository, IOrderLogRepository orderLogRepository,
+        OrderGrpc.OrderGrpcClient grpcClient)
     {
         _orderRepository = orderRepository;
         _orderLogRepository = orderLogRepository;
+        _grpcClient = grpcClient;
     }
 
     public async Task<int> Create(AddOrderRequestDto request, CancellationToken ct)
     {
+        try
+        {
+            var response = await _grpcClient.GetOrderAsync(new GetOrderRequest()
+            {
+                Id = 1
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+       
         var order = await _orderRepository.Create(request, ct);
         await _orderLogRepository.Create(order, ct);
         return order.Id;

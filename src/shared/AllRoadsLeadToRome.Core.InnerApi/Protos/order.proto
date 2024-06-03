@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package OrderApi;
+
+service OrderGrpc {
+  rpc GetOrder (GetOrderRequest) returns (GetOrderResponse);
+}
+
+message GetOrderRequest {
+  int32 id = 1;
+}
+
+message GetOrderResponse {
+  int32 id = 1;
+  string addressFrom = 2;
+  string addressTo = 3;
+  int32 status = 4;
+  int32 customerUserId = 5;
+  int32 deliveryUserId = 6;
+  double weight = 7;
+  double deliveryCost = 8;
+  google.protobuf.Timestamp CompletedDate = 9;
+}

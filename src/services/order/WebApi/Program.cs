@@ -1,11 +1,14 @@
 using AllRoadsLeadToRome.Service.Order.Application;
 using AllRoadsLeadToRome.Service.Order.Infrastructure;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.Context;
+using AllRoadsLeadToRome.Service.Order.Infrastructure.GrpcServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OrderApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddGrpc();
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -29,6 +32,12 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
         };
     };
 });
+
+builder.Services
+    .AddGrpcClient<OrderGrpc.OrderGrpcClient>((options) =>
+    {
+        options.Address = new Uri("https://localhost:5237");
+    });
 
 builder.Services.AddDbContext<OrderDbContext>(options =>
 {
@@ -55,6 +64,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-
+app.MapGrpcService<OrderService>();
 
 app.Run();

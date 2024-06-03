@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\shared\AllRoadsLeadToRome.Core\AllRoadsLeadToRome.Core.csproj" />
+      <ProjectReference Include="..\AllRoadsLeadToRome.Core\AllRoadsLeadToRome.Core.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.63.0"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Protobuf Include="Protos\order.proto">
+            <GrpcServices>None</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <OutputDir>Generated/</OutputDir>
+            <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
+        <Protobuf Include="Protos\order.proto">
+            <GrpcServices>Both</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <OutputDir>Generated/</OutputDir>
+            <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
+    </ItemGroup>
+    
+
+</Project>
