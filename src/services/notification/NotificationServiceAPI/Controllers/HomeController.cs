@@ -9,6 +9,12 @@ namespace NotificationServiceAPI.Controllers
     public class HomeController : ControllerBase
     {
         [HttpPost]
+        public WorkerResult GetTemplate()
+        {
+            return new WorkerResult(); 
+        }
+
+        [HttpPost]
         public WorkerResult SetTemplate()
         {
             return new WorkerResult();

@@ -9,6 +9,11 @@ namespace Application
             throw new NotImplementedException();
         }
 
+        public void GetTemplate(string template)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveTemplate(string template)
         {
             throw new NotImplementedException();
