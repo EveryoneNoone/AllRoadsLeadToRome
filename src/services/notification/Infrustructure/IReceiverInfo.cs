@@ -8,7 +8,8 @@ namespace Infrustructure
 {
     public interface IReceiverInfo
     {
-        string Receiver {  get; set; }
-        string Data { get; set; }
+        public string? Id { get; set; }
+        public string Receiver {  get; set; }
+        public string Data { get; set; }
     }
 }

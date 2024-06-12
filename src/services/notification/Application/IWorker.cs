@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-    internal interface IWorker
+    public interface IWorker
     {
         public void AddTemplate(string template);
         public void UpdateTemplate(string template);

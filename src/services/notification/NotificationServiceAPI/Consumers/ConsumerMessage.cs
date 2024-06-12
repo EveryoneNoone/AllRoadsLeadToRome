@@ -1,6 +1,7 @@
-﻿
-using MassTransit;
-using NotificationServiceAPI.Dto;
+﻿using MassTransit;
+using AllRoadsLeadToRome.Core.MassTransit.Messages;
+using AllRoadsLeadToRome.Core.MassTransit.Enums;
+using Application;
 
 namespace NotificationServiceAPI.Consumers
 {
@@ -8,7 +9,20 @@ namespace NotificationServiceAPI.Consumers
     {
         public async Task Consume(ConsumeContext<MessageDto> context)
         {
-            Console.WriteLine("I'm in");
+            switch (context.Message.TypeNotification) 
+            {
+                case NotificationType.None:
+                    break;
+                case NotificationType.Sms:
+                    SmsWorker smsWorker = new SmsWorker();
+                    break;
+                case NotificationType.Email:
+                    EmailWorker emailWorker = new EmailWorker();
+                    break;
+                case NotificationType.Push:
+                    PushWorker pushWorker = new PushWorker();
+                    break;
+            }
         }
     }
 }

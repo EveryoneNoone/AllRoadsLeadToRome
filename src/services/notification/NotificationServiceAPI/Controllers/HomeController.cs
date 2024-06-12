@@ -8,6 +8,13 @@ namespace NotificationServiceAPI.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
+        private readonly IWorker worker;
+
+        public HomeController(IWorker worker)
+        {
+            this.worker = worker;
+        }
+
         [HttpPost]
         public WorkerResult GetTemplate()
         {

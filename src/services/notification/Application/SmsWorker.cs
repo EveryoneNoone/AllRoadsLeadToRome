@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-    internal class SmsWorker : IWorker
+    public class SmsWorker : IWorker
     {
         public void AddTemplate(string template)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-    internal class PushWorker : IWorker
+    public class PushWorker : IWorker
     {
         public void AddTemplate(string template)
         {
