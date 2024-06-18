@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.25.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\shared\AllRoadsLeadToRome.Core.MassTransit\AllRoadsLeadToRome.Core.MassTransit.csproj" />
+  </ItemGroup>
+
 </Project>

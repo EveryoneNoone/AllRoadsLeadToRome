@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Application;
+using NotificationServiceAPI.Services;
+using Infrustructure;
 
 namespace NotificationServiceAPI.Controllers
 {
@@ -8,32 +10,35 @@ namespace NotificationServiceAPI.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly IWorker worker;
+        //private readonly IWorker worker;
 
-        public HomeController(IWorker worker)
+        private readonly NotificationsService notificationsService;
+
+        public HomeController(NotificationsService service)
         {
-            this.worker = worker;
+            notificationsService = service;
         }
 
-        [HttpPost]
-        public WorkerResult GetTemplate()
+        [HttpGet("GetTemplate")]
+        public async Task<Template> GetTemplate(string id)
         {
-            return new WorkerResult(); 
+            var template = await notificationsService.GetTemplateAsync(id);
+            return template;
         }
 
-        [HttpPost]
+        [HttpPost("SetTemplate")]
         public WorkerResult SetTemplate()
         {
             return new WorkerResult();
         }
 
-        [HttpPost]
-        public WorkerResult UpdateTemplate() 
-        { 
-            return new WorkerResult(); 
+        [HttpPut("UpdateTemplate")]
+        public WorkerResult UpdateTemplate()
+        {
+            return new WorkerResult();
         }
 
-        [HttpPost]
+        [HttpDelete("DeleteTemplate")]
         public WorkerResult DeleteTemplate()
         {
             return new WorkerResult();

@@ -1,6 +1,8 @@
 using MassTransit;
 using NotificationServiceAPI;
 using NotificationServiceAPI.Consumers;
+using NotificationServiceAPI.Models;
+using NotificationServiceAPI.Services;
 using NotificationServiceAPI.Settings;
 
 internal class Program
@@ -18,10 +20,10 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
+        //IConfiguration configuration = new ConfigurationBuilder()
+        //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        //    .AddEnvironmentVariables()
+        //    .Build();
 
         builder.Services.AddMassTransit(x =>
         {
@@ -33,6 +35,10 @@ internal class Program
             });
         });
         builder.Services.AddHostedService<HostService>();
+
+        builder.Services.Configure<NotificationDatabaseSettings>(builder.Configuration.GetSection("NotificationStoreDatabase"));
+
+        builder.Services.AddSingleton<NotificationsService>();
 
         var app = builder.Build();
 
@@ -53,52 +59,52 @@ internal class Program
         app.Run();
     }
 
-    private static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
+    //private static IHostBuilder CreateHostBuilder(string[] args)
+    //{
+    //    IConfiguration configuration = new ConfigurationBuilder()
+    //        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    //        .AddEnvironmentVariables()
+    //        .Build();
 
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.ConfigureServices(services =>
-                {
-                    services.AddControllers();
-                    services.AddEndpointsApiExplorer();
-                    services.AddSwaggerGen();
-                })
-                .Configure((hostContext, app) =>
-                {
-                    if (hostContext.HostingEnvironment.IsDevelopment())
-                    {
-                        app.UseSwagger();
-                        app.UseSwaggerUI();
-                    }
-                    app.UseHttpsRedirection();
-                    app.UseAuthorization();
-                    app.Build();
-                    app.UseEndpoints(endpoints =>
-                    {
-                        endpoints.MapControllers();
-                    });
-                });
-            })
-            .ConfigureServices((hostContext, services) =>
-            {
-                services.AddMassTransit(x =>
-                {
-                    x.AddConsumer<ConsumerMessage>();
-                    x.UsingRabbitMq((context, cfg) =>
-                    {
-                        ConfigureRMQ(cfg, configuration);
-                        RegisterEndpoints(cfg);
-                    });
-                });
-                services.AddHostedService<HostService>();
-            });
-    }
+    //    return Host.CreateDefaultBuilder(args)
+    //        .ConfigureWebHostDefaults(webBuilder =>
+    //        {
+    //            webBuilder.ConfigureServices(services =>
+    //            {
+    //                services.AddControllers();
+    //                services.AddEndpointsApiExplorer();
+    //                services.AddSwaggerGen();
+    //            })
+    //            .Configure((hostContext, app) =>
+    //            {
+    //                if (hostContext.HostingEnvironment.IsDevelopment())
+    //                {
+    //                    app.UseSwagger();
+    //                    app.UseSwaggerUI();
+    //                }
+    //                app.UseHttpsRedirection();
+    //                app.UseAuthorization();
+    //                app.Build();
+    //                app.UseEndpoints(endpoints =>
+    //                {
+    //                    endpoints.MapControllers();
+    //                });
+    //            });
+    //        })
+    //        .ConfigureServices((hostContext, services) =>
+    //        {
+    //            services.AddMassTransit(x =>
+    //            {
+    //                x.AddConsumer<ConsumerMessage>();
+    //                x.UsingRabbitMq((context, cfg) =>
+    //                {
+    //                    ConfigureRMQ(cfg, configuration);
+    //                    RegisterEndpoints(cfg);
+    //                });
+    //            });
+    //            services.AddHostedService<HostService>();
+    //        });
+    //}
 
     /// <summary>
     /// Для докера host использовать "host.docker.internal"
