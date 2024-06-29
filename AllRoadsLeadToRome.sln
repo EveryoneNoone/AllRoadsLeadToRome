@@ -29,11 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\services\auth
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "notification", "notification", "{331CB637-0D48-4729-BFF5-610011F218B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8202D5E5-3615-4531-8109-01DEC6F1F8C8}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrustructure", "src\services\notification\Infrustructure\Infrustructure.csproj", "{2E78FB41-00CC-409D-BF53-7EA60218A6C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\notification\Application\Application.csproj", "{8DBAAE1D-B980-4975-B4BE-B229E2686E55}"
@@ -42,11 +37,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationServiceTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationServiceAPI", "src\services\notification\NotificationServiceAPI\NotificationServiceAPI.csproj", "{CD15343E-47F6-4AA6-B924-65D47BA6A96D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.Db", "src\shared\AllRoadsLeadToRome.Core.Db\AllRoadsLeadToRome.Core.Db.csproj", "{7C6EBDAB-7AA0-4385-B377-4478CD71D682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllRoadsLeadToRome.Core.Db", "src\shared\AllRoadsLeadToRome.Core.Db\AllRoadsLeadToRome.Core.Db.csproj", "{7C6EBDAB-7AA0-4385-B377-4478CD71D682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.InnerApi", "src\shared\AllRoadsLeadToRome.Core.InnerApi\AllRoadsLeadToRome.Core.InnerApi.csproj", "{E5EEAD19-6E60-49B5-9E16-5DF35BE9B9CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllRoadsLeadToRome.Core.InnerApi", "src\shared\AllRoadsLeadToRome.Core.InnerApi\AllRoadsLeadToRome.Core.InnerApi.csproj", "{E5EEAD19-6E60-49B5-9E16-5DF35BE9B9CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.MassTransit", "src\shared\AllRoadsLeadToRome.Core.MassTransit\AllRoadsLeadToRome.Core.MassTransit.csproj", "{8E6D4223-EDB8-4280-9E75-9BB79E2232CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllRoadsLeadToRome.Core.MassTransit", "src\shared\AllRoadsLeadToRome.Core.MassTransit\AllRoadsLeadToRome.Core.MassTransit.csproj", "{8E6D4223-EDB8-4280-9E75-9BB79E2232CB}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,6 +115,10 @@ Global
 		{8E6D4223-EDB8-4280-9E75-9BB79E2232CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E6D4223-EDB8-4280-9E75-9BB79E2232CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E6D4223-EDB8-4280-9E75-9BB79E2232CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

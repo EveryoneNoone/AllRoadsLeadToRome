@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  notificationserviceapi:
+    image: ${DOCKER_REGISTRY-}notificationserviceapi
+    build:
+      context: .
+      dockerfile: src/services/notification/NotificationServiceAPI/Dockerfile
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb-container
+    command: mongod --auth --bind_ip_all
+    environment:
+      MONGO_INITDB_DATABASE: NotificationStore
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb-data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongodb-data:
+    driver: local  
+

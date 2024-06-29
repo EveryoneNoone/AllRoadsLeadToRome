@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AllRoadsLeadToRome.Core.MassTransit": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:56429;http://localhost:56430"
+    }
+  }
+}

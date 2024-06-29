@@ -38,7 +38,7 @@ internal class Program
 
         builder.Services.Configure<NotificationDatabaseSettings>(builder.Configuration.GetSection("NotificationStoreDatabase"));
 
-        builder.Services.AddSingleton<NotificationsService>();
+        builder.Services.AddSingleton<TemplatesService>();
 
         var app = builder.Build();
 

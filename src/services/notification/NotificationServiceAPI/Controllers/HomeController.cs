@@ -12,36 +12,41 @@ namespace NotificationServiceAPI.Controllers
     {
         //private readonly IWorker worker;
 
-        private readonly NotificationsService notificationsService;
+        private readonly TemplatesService notificationsService;
 
-        public HomeController(NotificationsService service)
+        public HomeController(TemplatesService service)
         {
             notificationsService = service;
         }
 
-        [HttpGet("GetTemplate")]
-        public async Task<Template> GetTemplate(string id)
+        [HttpGet("GetAllTemplates")]
+        public async Task<List<Template>> GetAllTemplates()
         {
-            var template = await notificationsService.GetTemplateAsync(id);
-            return template;
+            return await notificationsService.GetTemplatesAsync();
         }
 
-        [HttpPost("SetTemplate")]
-        public WorkerResult SetTemplate()
+        [HttpGet("GetTemplate")]
+        public async Task<Template?> GetTemplate(string name)
         {
-            return new WorkerResult();
+            return await notificationsService.GetTemplateAsync(name);
+        }
+
+        [HttpPost("CreateTemplate")]
+        public async Task CreateTemplate(Template template)
+        {
+            await notificationsService.CreateTemplateAsync(template);
         }
 
         [HttpPut("UpdateTemplate")]
-        public WorkerResult UpdateTemplate()
+        public async Task UpdateTemplate(string name, Template template)
         {
-            return new WorkerResult();
+            await notificationsService.UpdateTemplateAsync(name, template);
         }
 
         [HttpDelete("DeleteTemplate")]
-        public WorkerResult DeleteTemplate()
+        public async Task DeleteTemplate(string name)
         {
-            return new WorkerResult();
+            await notificationsService.RemoveTemplateAsync(name);
         }
     }
 }
