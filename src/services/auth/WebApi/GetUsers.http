@@ -1,6 +1,0 @@
-# For more info on HTTP files go to https://aka.ms/vs/httpfile
-@WebApi_HostAddress = https://localhost:8001
-GET {{WebApi_HostAddress}}/api/users
-Accept: application/json
-
-###

@@ -1,35 +1,37 @@
-﻿namespace WebApi.Controllers;
-
-using Core.Entities;
-using Infrastructure.Repositories;
+﻿using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WebApi.Models;
+
+namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly IRepository<User> _userRepository;
+    private readonly UserManager<User> _userManager;
 
-    public UsersController(IRepository<User> userRepository)
+    public UsersController(UserManager<User> userManager)
     {
-        _userRepository = userRepository;
+        _userManager = userManager;
     }
 
-    // GET: api/Users
     [HttpGet]
-    public async Task<IActionResult> GetUsers(CancellationToken token)
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> GetUsers()
     {
-        var users = await _userRepository.GetAllAsync(token);
+        var users = _userManager.Users;
         return Ok(users);
     }
 
-    // GET: api/Users/5
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUser(Guid id, CancellationToken token)
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> GetUser(string id)
     {
-        var user = await _userRepository.GetByIdAsync(id, token);
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
             return NotFound();
@@ -37,45 +39,63 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    // POST: api/Users
-    [HttpPost]
-    public async Task<IActionResult> PostUser([FromBody] User user, CancellationToken token)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-        await _userRepository.AddAsync(user, token);
-        return CreatedAtAction("GetUser", new { id = user.Id }, user);
-    }
-
-    // PUT: api/Users/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutUser(Guid id, [FromBody] User user, CancellationToken token)
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> PutUser(string id, [FromBody] UpdateUserModel model)
     {
-        if (id != user.Id)
+        if (id != model.Id)
         {
             return BadRequest();
         }
 
-        await _userRepository.UpdateAsync(user, token);
-
-        return NoContent();
-    }
-
-    // DELETE: api/Users/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(Guid id, CancellationToken token)
-    {
-        var user = await _userRepository.GetByIdAsync(id, token);
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
             return NotFound();
         }
 
-        await _userRepository.DeleteAsync(id, token);
+        user.FullName = model.FullName;
+        user.DriverApproved = model.DriverApproved;
+        user.NotificationPreference = model.NotificationPreference;
+        user.Type = model.Type;
 
-        return NoContent();
+        var result = await _userManager.UpdateAsync(user);
+
+        if (result.Succeeded)
+        {
+            return NoContent();
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+
+        return BadRequest(ModelState);
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var result = await _userManager.DeleteAsync(user);
+
+        if (result.Succeeded)
+        {
+            return NoContent();
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+
+        return BadRequest(ModelState);
     }
 }
-

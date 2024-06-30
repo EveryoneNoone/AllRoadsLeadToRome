@@ -1,29 +1,21 @@
 ﻿using Core.Entities;
-using Infrastructure.Configurations;
-using Infrastructure.Data;
-using Infrastructure.EntityTypeConfigurations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Context
+namespace Infrastructure.Context;
+
+public class AppDbContext : IdentityDbContext<User>
 {
-    public class AppDbContext : DbContext
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        base.OnModelCreating(modelBuilder);
+
+        foreach (var type in Enum.GetNames(typeof(UserType)))
         {
-        }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserSession> UserSessions { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Apply entity configurations
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new UserSessionConfiguration());
-
-            SeedFakeData.Initialize(modelBuilder);
-
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = type, NormalizedName = type.ToUpper() });
         }
     }
 }

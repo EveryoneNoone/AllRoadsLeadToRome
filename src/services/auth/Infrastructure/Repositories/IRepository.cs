@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T>
     {
         Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken, params Expression<Func<T, object>>[] includeProperties);
