@@ -18,12 +18,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllRoadsLeadToRome.Core", "src\shared\AllRoadsLeadToRome.Core\AllRoadsLeadToRome.Core.csproj", "{0861C0CD-AC64-4F48-93C1-61C460EE50C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth", "auth", "{EE915431-4AE4-431A-83DE-77F32A3497E9}"
+	ProjectSection(SolutionItems) = preProject
+		src\services\auth\docker-compose.yml = src\services\auth\docker-compose.yml
+		src\services\auth\Dockerfile = src\services\auth\Dockerfile
+		src\services\auth\readme.md = src\services\auth\readme.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\services\auth\Core\Core.csproj", "{44B3D5C4-1492-486C-9925-4EFED6E84BA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\services\auth\Infrastructure\Infrastructure.csproj", "{C9FAC201-8C5B-43F8-BFB2-5F27740D696F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\auth\Application\Application.csproj", "{22FFD334-14FE-49DF-9D23-BD31DFB4B199}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\services\auth\WebApi\WebApi.csproj", "{AAB524B3-5792-4046-AB8D-06022C1DCA87}"
 EndProject
@@ -79,10 +82,6 @@ Global
 		{C9FAC201-8C5B-43F8-BFB2-5F27740D696F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9FAC201-8C5B-43F8-BFB2-5F27740D696F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9FAC201-8C5B-43F8-BFB2-5F27740D696F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22FFD334-14FE-49DF-9D23-BD31DFB4B199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22FFD334-14FE-49DF-9D23-BD31DFB4B199}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22FFD334-14FE-49DF-9D23-BD31DFB4B199}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22FFD334-14FE-49DF-9D23-BD31DFB4B199}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -131,7 +130,6 @@ Global
 		{0861C0CD-AC64-4F48-93C1-61C460EE50C1} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
 		{44B3D5C4-1492-486C-9925-4EFED6E84BA7} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
 		{C9FAC201-8C5B-43F8-BFB2-5F27740D696F} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
-		{22FFD334-14FE-49DF-9D23-BD31DFB4B199} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
 		{AAB524B3-5792-4046-AB8D-06022C1DCA87} = {EE915431-4AE4-431A-83DE-77F32A3497E9}
 		{2E78FB41-00CC-409D-BF53-7EA60218A6C8} = {331CB637-0D48-4729-BFF5-610011F218B0}
 		{8DBAAE1D-B980-4975-B4BE-B229E2686E55} = {331CB637-0D48-4729-BFF5-610011F218B0}

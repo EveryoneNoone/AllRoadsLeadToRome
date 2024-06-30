@@ -1,6 +1,17 @@
-@WebApi_HostAddress = http://localhost:5162
+﻿@WebApi_HostAddress = https://localhost:7259
 
-GET {{WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{WebApi_HostAddress}}/api/account/login
+Content-Type: application/json
 
+{
+  "Email":"admin@example.com",
+  "Password":"Admin@123"
+}
+
+###
+@token = CfDJ8IzlZCFxh21MmFmZ8wZm6fyd5gqatkfgOjKZHkNHiEqIVDkK6Hx2zreKlj0idfFlTbtMKTlLFROTFtCq8oyzlYKRCjSBvEfSP8g46y_SvouXC37uFJ5pm7zN5iYap4l0Brlp2ycIWnBbOgxnE4w-IK9BNnAL4YDf_hQaloZpbwGxjfshAcoq27yT0yO9HosUwd4M9dkuHLTPmRuRD34LxHefPPU5emwiqgftGTkUwPE_On0au0aTEWPW6YiazFOgThuWeDDRghCIMlkxrUprcY7WlvaYWdq-F3amgtTAwjrLOLwBepvtchYCOFWF5KkF08uIkLndMAubxMsre6y6bpJeQZmsZNtzJjAhpHGDh9TiaUZBUrz1m99xFpFxrks4035mKz0ZgyqO-C06ev50BBl588tcufMoqQReyVhFkTg4o3UHdM2OxaeRs1DL13eQ6cU1SthTY-2-LZ-fMXYXS10LOQocwb5DKSdy7zr8CH-PfCkfdsGPm4XFpJIiuDa0ORlpKXmquXEMy8d1buhKa0MawL3u2Yja75qhCTSmhqt13UtuO95P1yre9F9lvY5cPmTirOlsuGjBVR_u4R9WnO6uKtw6kWRnTxwspgEwsGn9jABXXWPqeQueMtJEy4cVyip6yCrTXND-lEFXbXrgLJPHKfzafOApgPTcAcNWOkEvFt4EMJNH__9fJsUOhOX-LA
+
+GET {{WebApi_HostAddress}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
 ###
