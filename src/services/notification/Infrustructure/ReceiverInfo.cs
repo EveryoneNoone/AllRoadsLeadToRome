@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using AllRoadsLeadToRome.Core.MassTransit.Enums;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrustructure
 {
-    internal class Push : IReceiverInfo
+    public class ReceiverInfo : IReceiverInfo
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -17,7 +18,10 @@ namespace Infrustructure
         [BsonElement("Receiver")]
         public string Receiver { get; set; }
 
-        [BsonElement("Data")]
-        public string Data { get; set; }
+        [BsonElement("Message")]
+        public string Message { get; set; }
+
+        [BsonElement("NotificationType")]
+        public NotificationType NotificationType { get; set; }
     }
 }

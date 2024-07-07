@@ -38,7 +38,7 @@ internal class Program
 
         builder.Services.Configure<NotificationDatabaseSettings>(builder.Configuration.GetSection("NotificationStoreDatabase"));
 
-        builder.Services.AddSingleton<TemplatesService>();
+        builder.Services.AddSingleton<MongoDBService>();
 
         var app = builder.Build();
 

@@ -33,19 +33,19 @@ db.Templates.insert({
 
 
 db.Templates.insert({
-    "Name": "OrderCreate",
+    "Name": "CreateOrder",
     "Value": "Заказ создан {OrderId}",
     "TemplateType": 1
 });
 
 db.Templates.insert({
-    "Name": "OrderCreate",
+    "Name": "CreateOrder",
     "Value": "Заказ на доставку под номером {OrderId} создан",
     "TemplateType": 2
 });
 
 db.Templates.insert({
-    "Name": "OrderCreate",
+    "Name": "CreateOrder",
     "Value": "Заказ с номером {OrderId} создан",
     "TemplateType": 3
 });

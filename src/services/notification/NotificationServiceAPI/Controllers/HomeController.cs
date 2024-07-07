@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application;
 using NotificationServiceAPI.Services;
 using Infrustructure;
+using AllRoadsLeadToRome.Core.MassTransit.Enums;
 
 namespace NotificationServiceAPI.Controllers
 {
@@ -12,9 +13,9 @@ namespace NotificationServiceAPI.Controllers
     {
         //private readonly IWorker worker;
 
-        private readonly TemplatesService notificationsService;
+        private readonly MongoDBService notificationsService;
 
-        public HomeController(TemplatesService service)
+        public HomeController(MongoDBService service)
         {
             notificationsService = service;
         }
@@ -26,9 +27,9 @@ namespace NotificationServiceAPI.Controllers
         }
 
         [HttpGet("GetTemplate")]
-        public async Task<Template?> GetTemplate(string name)
+        public async Task<Template?> GetTemplate(string name, NotificationType notificationType)
         {
-            return await notificationsService.GetTemplateAsync(name);
+            return await notificationsService.GetTemplateAsync(name, notificationType);
         }
 
         [HttpPost("CreateTemplate")]
@@ -38,15 +39,15 @@ namespace NotificationServiceAPI.Controllers
         }
 
         [HttpPut("UpdateTemplate")]
-        public async Task UpdateTemplate(string name, Template template)
+        public async Task UpdateTemplate(string name, NotificationType notificationType, Template template)
         {
-            await notificationsService.UpdateTemplateAsync(name, template);
+            await notificationsService.UpdateTemplateAsync(name, notificationType, template);
         }
 
         [HttpDelete("DeleteTemplate")]
-        public async Task DeleteTemplate(string name)
+        public async Task DeleteTemplate(string name, NotificationType notificationType)
         {
-            await notificationsService.RemoveTemplateAsync(name);
+            await notificationsService.RemoveTemplateAsync(name, notificationType);
         }
     }
 }

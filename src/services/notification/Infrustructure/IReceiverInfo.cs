@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AllRoadsLeadToRome.Core.MassTransit.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Infrustructure
     {
         public string? Id { get; set; }
         public string Receiver {  get; set; }
-        public string Data { get; set; }
+        public string Message { get; set; }
+        public NotificationType NotificationType { get; set; }
     }
 }
