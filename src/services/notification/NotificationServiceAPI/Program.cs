@@ -1,8 +1,8 @@
+using Application;
+using Infrustructure;
 using MassTransit;
 using NotificationServiceAPI;
 using NotificationServiceAPI.Consumers;
-using NotificationServiceAPI.Models;
-using NotificationServiceAPI.Services;
 using NotificationServiceAPI.Settings;
 
 internal class Program

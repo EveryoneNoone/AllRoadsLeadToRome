@@ -23,5 +23,9 @@ namespace Infrustructure
 
         [BsonElement("NotificationType")]
         public NotificationType NotificationType { get; set; }
+        [BsonElement("SendDateTime")]
+        public DateTime SendDateTime { get; set; }
+        [BsonElement("SendResult")]
+        public bool SendResult { get; set; }
     }
 }

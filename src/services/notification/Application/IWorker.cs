@@ -9,6 +9,6 @@ namespace Application
 {
     public interface IWorker
     {
-        public void Send(IReceiverInfo receiverInfo);
+        public Task SendAsync(ReceiverInfo receiverInfo);
     }
 }

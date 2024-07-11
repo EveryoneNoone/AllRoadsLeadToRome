@@ -2,7 +2,6 @@
 using AllRoadsLeadToRome.Core.MassTransit.Messages;
 using AllRoadsLeadToRome.Core.MassTransit.Enums;
 using Application;
-using NotificationServiceAPI.Services;
 using Microsoft.Extensions.Options;
 using Infrustructure;
 
@@ -19,12 +18,12 @@ namespace NotificationServiceAPI.Consumers
                 .AddEnvironmentVariables()
                 .Build();
 
-            IOptions<Models.NotificationDatabaseSettings> options = Options.Create((Models.NotificationDatabaseSettings)configuration.GetSection("NotificationStoreDatabase"));
+            IOptions<NotificationDatabaseSettings> options = Options.Create((NotificationDatabaseSettings)configuration.GetSection("NotificationStoreDatabase"));
             var dbService = new MongoDBService(options);
             var template = await dbService.GetTemplateAsync(receiver.TemplateName, receiver.TypeNotification);
 
             var message = PrepareWorker.PrepareMessage(template.Value, receiver.Content);
-            IReceiverInfo receiverInfo = new ReceiverInfo
+            ReceiverInfo receiverInfo = new ReceiverInfo
             {
                 Message = message,
                 NotificationType = receiver.TypeNotification,
@@ -35,16 +34,16 @@ namespace NotificationServiceAPI.Consumers
                 case NotificationType.None:
                     break;
                 case NotificationType.Sms:
-                    SmsWorker smsWorker = new SmsWorker();
-                    smsWorker.Send(receiverInfo);
+                    SmsWorker smsWorker = new SmsWorker(dbService);
+                    await smsWorker.SendAsync(receiverInfo);
                     break;
                 case NotificationType.Email:
-                    EmailWorker emailWorker = new EmailWorker();
-                    emailWorker.Send(receiverInfo);
+                    EmailWorker emailWorker = new EmailWorker(dbService);
+                    await emailWorker.SendAsync(receiverInfo);
                     break;
                 case NotificationType.Push:
-                    PushWorker pushWorker = new PushWorker();
-                    pushWorker.Send(receiverInfo);
+                    PushWorker pushWorker = new PushWorker(dbService);
+                    await pushWorker.SendAsync(receiverInfo);
                     break;
             }
         }

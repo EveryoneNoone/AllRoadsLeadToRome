@@ -2,9 +2,8 @@
 using Infrustructure;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using NotificationServiceAPI.Models;
 
-namespace NotificationServiceAPI.Services
+namespace Application
 {
     public class MongoDBService
     {

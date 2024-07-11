@@ -13,5 +13,7 @@ namespace Infrustructure
         public string Receiver {  get; set; }
         public string Message { get; set; }
         public NotificationType NotificationType { get; set; }
+        public DateTime SendDateTime { get; set; }
+        public bool SendResult { get; set; }
     }
 }

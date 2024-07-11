@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Application;
-using NotificationServiceAPI.Services;
 using Infrustructure;
 using AllRoadsLeadToRome.Core.MassTransit.Enums;
 
@@ -14,10 +13,12 @@ namespace NotificationServiceAPI.Controllers
         //private readonly IWorker worker;
 
         private readonly MongoDBService notificationsService;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(MongoDBService service)
+        public HomeController(MongoDBService service, ILogger<HomeController> logger)
         {
             notificationsService = service;
+            _logger = logger;
         }
 
         [HttpGet("GetAllTemplates")]

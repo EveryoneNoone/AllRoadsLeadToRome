@@ -1,4 +1,4 @@
-﻿namespace NotificationServiceAPI.Models
+﻿namespace Infrustructure
 {
     public class NotificationDatabaseSettings
     {

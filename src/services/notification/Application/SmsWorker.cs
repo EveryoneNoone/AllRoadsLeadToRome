@@ -9,9 +9,18 @@ namespace Application
 {
     public class SmsWorker : IWorker
     {
-        public void Send(IReceiverInfo receiverInfo)
+        private readonly MongoDBService dBService;
+        public SmsWorker(MongoDBService mongodBService)
         {
-            throw new NotImplementedException();
+            dBService = mongodBService;
+        }
+
+        public async Task SendAsync(ReceiverInfo receiverInfo)
+        {
+            //Here sending sms
+            receiverInfo.SendResult = true;
+            receiverInfo.SendDateTime = DateTime.Now;
+            await dBService.CreateNotificationAsync(receiverInfo);
         }
     }
 }

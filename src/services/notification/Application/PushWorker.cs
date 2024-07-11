@@ -9,9 +9,19 @@ namespace Application
 {
     public class PushWorker : IWorker
     {
-        public void Send(IReceiverInfo receiverInfo)
+        private readonly MongoDBService dBService;
+
+        public PushWorker(MongoDBService mongoDBService)
         {
-            throw new NotImplementedException();
+            dBService = mongoDBService;
+        }
+
+        public async Task SendAsync(ReceiverInfo receiverInfo)
+        {
+            //Here send push
+            receiverInfo.SendResult = true;
+            receiverInfo.SendDateTime = DateTime.Now;
+            await dBService.CreateNotificationAsync(receiverInfo);
         }
     }
 }

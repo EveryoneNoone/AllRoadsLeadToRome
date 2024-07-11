@@ -4,9 +4,19 @@ namespace Application
 {
     public class EmailWorker : IWorker
     {
-        public void Send(IReceiverInfo receiverInfo)
+        private readonly MongoDBService dBService;
+
+        public EmailWorker(MongoDBService mongoDBService)
         {
-            throw new NotImplementedException();
+            dBService = mongoDBService;
+        }
+
+        public async Task SendAsync(ReceiverInfo receiverInfo)
+        {
+            //Here send email
+            receiverInfo.SendResult = true;
+            receiverInfo.SendDateTime = DateTime.Now;
+            await dBService.CreateNotificationAsync(receiverInfo);
         }
     }
 }
