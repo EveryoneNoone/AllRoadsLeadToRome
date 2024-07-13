@@ -1,29 +1,29 @@
 ﻿version: '3.8'
 
 services:
-  db:
+  authservice_db:
     image: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  web:
+  authservice_webapi:
     image: auth/webapi
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8090:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultPostgresConnection=Host=db;Port=5432;Database=postgres;Username=postgres;Password=123456
+      - ConnectionStrings__DefaultPostgresConnection=Host=authservice_db;Port=5433;Database=postgres;Username=postgres;Password=123456
     depends_on:
-      - db
+      - authservice_db
 
 volumes:
   postgres_data:

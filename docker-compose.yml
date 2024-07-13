@@ -20,8 +20,33 @@ services:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - "27017:27017"
+ 
+  authservice_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  authservice_webapi:
+    image: auth/webapi
+    build:
+      context: .
+      dockerfile: src/services/auth/webapi/Dockerfile
+    ports:
+      - "8090:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultPostgresConnection=Host=authservice_db;Port=5432;Database=postgres;Username=postgres;Password=123456
+    depends_on:
+      - authservice_db
 
 volumes:
   mongodb-data:
     driver: local  
+  postgres_data:
 
