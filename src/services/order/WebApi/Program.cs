@@ -33,11 +33,22 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-builder.Services
-    .AddGrpcClient<OrderGrpc.OrderGrpcClient>((options) =>
+builder.Services.AddGrpcClient<OrderGrpc.OrderGrpcClient>(options =>
     {
-        options.Address = new Uri("https://localhost:5237");
+        options.Address = new Uri("https://localhost:7243");
+    })
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        var handler = new HttpClientHandler();
+        // Skip SSL certificate validation
+        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+        return handler;
     });
+    // .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    // {
+    //     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    // });
+
 
 builder.Services.AddDbContext<OrderDbContext>(options =>
 {

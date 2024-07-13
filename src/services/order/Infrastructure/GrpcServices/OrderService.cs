@@ -27,7 +27,7 @@ public class OrderService : OrderGrpc.OrderGrpcBase
             DeliveryUserId = order.DeliveryUserId,
             Weight = (double)order.Weight,
             DeliveryCost = (double)order.DeliveryCost,
-            CompletedDate = order.CompletedDate.ToTimestamp()
+            CompletedDate = order.CompletedDate.ToUniversalTime().ToTimestamp()
         };
     }
 }

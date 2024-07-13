@@ -15,7 +15,13 @@ public class OrderStatusChangedConsumer : IConsumer<OrderStatusChangedEvent>
 
     public Task Consume(ConsumeContext<OrderStatusChangedEvent> context)
     {
-        _logger.LogInformation(" [*] Message received Order id: {code} ,Order Status: {name} ",context.Message.Id,context.Message.NewOrderStatus);
+        _logger.LogInformation(
+            " [*] Message received Order id: {id} ,Order Status: {newOlderStatus} {customUserId} {deliveryUserId} {oldOrderStatus}",
+            context.Message.Id,
+            context.Message.NewOrderStatus,
+            context.Message.CustomerUserId,
+            context.Message.DeliveryUserId,
+            context.Message.OldOrderStatus);
         return Task.CompletedTask;
     }
 }
