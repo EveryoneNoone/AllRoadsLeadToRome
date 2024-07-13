@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -37,13 +38,16 @@ public class AccountController : ControllerBase
             Email = model.Email,
             FullName = model.FullName,
             NotificationPreference = model.NotificationPreference,
-            Type = model.Type
+            Type = model.Type,
+            DriverApproved = model.DriverApproved,
+            RefreshToken = string.Empty,
+            RefreshTokenExpiryTime = DateTime.UtcNow
         };
-        var result = await _userManager.CreateAsync(user, model.Password);
 
+        var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
-            return Ok();
+            return Ok(new { Message = "User registered successfully" });
         }
 
         foreach (var error in result.Errors)
@@ -67,14 +71,16 @@ public class AccountController : ControllerBase
         }
 
         var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-        
         if (result.Succeeded)
         {
             var roles = await _userManager.GetRolesAsync(user);
             var token = GenerateJwtToken(user, roles);
             var refreshToken = GenerateRefreshToken();
 
-            // Save refresh token in database or cache for later validation
+            // Сохранение refresh-токена и времени его истечения в базе данных
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddSeconds(_jwtSettings.RefreshTokenExpiration);
+            await _userManager.UpdateAsync(user);
 
             return Ok(new
             {
@@ -92,6 +98,35 @@ public class AccountController : ControllerBase
         return BadRequest(ModelState);
     }
 
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] TokenRequestModel model)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        // Поиск пользователя по refresh-токену
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.RefreshToken == model.RefreshToken);
+        if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+        {
+            return BadRequest("Invalid refresh token or token expired.");
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var newAccessToken = GenerateJwtToken(user, roles);
+        var newRefreshToken = GenerateRefreshToken();
+
+        // Обновление refresh-токена в базе данных
+        user.RefreshToken = newRefreshToken;
+        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddSeconds(_jwtSettings.RefreshTokenExpiration);
+        await _userManager.UpdateAsync(user);
+
+        return Ok(new
+        {
+            Token = newAccessToken,
+            RefreshToken = newRefreshToken
+        });
+    }
+
     private string GenerateJwtToken(User user, IList<string> roles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -107,7 +142,7 @@ public class AccountController : ControllerBase
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpiration),
+            Expires = DateTime.UtcNow.AddSeconds(_jwtSettings.AccessTokenExpiration),
             Issuer = _jwtSettings.Issuer,
             Audience = _jwtSettings.Audience,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

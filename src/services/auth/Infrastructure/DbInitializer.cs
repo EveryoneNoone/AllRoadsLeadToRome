@@ -6,19 +6,9 @@ namespace Infrastructure
 {
     public static class DbInitializer
     {
-        //public static void Initialize(AppDbContext context)
-        //{
-        //    InitializeDatabase(context);
-        //}
-
-        //public static void InitializeDatabase(AppDbContext context)
-        //{
-        //    //context.Database.EnsureDeleted();
-        //    context.Database.EnsureCreated();
-        //}
-
         public static async Task Initialize(AppDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
+            // Ensure the database is created
             context.Database.EnsureCreated();
 
             string[] roleNames = { "User", "Driver", "Administrator" };
@@ -38,7 +28,10 @@ namespace Infrastructure
                 Email = "admin@example.com",
                 FullName = "Admin User",
                 Type = UserType.Administrator,
-                NotificationPreference = NotificationType.Email
+                NotificationPreference = NotificationType.Email,
+                DriverApproved = true, // example field, set according to your needs
+                RefreshToken = string.Empty,
+                RefreshTokenExpiryTime = DateTime.UtcNow // Set default value, update as necessary
             };
 
             var adminPassword = "Admin@123";

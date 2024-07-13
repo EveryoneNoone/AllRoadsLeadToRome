@@ -1,4 +1,6 @@
-﻿@WebApi_HostAddress = https://localhost:7259
+﻿@WebApi_HostAddress = http://localhost:8080
+
+# login as Admin
 
 POST {{WebApi_HostAddress}}/api/account/login
 Content-Type: application/json
@@ -9,9 +11,39 @@ Content-Type: application/json
 }
 
 ###
-@token = CfDJ8IzlZCFxh21MmFmZ8wZm6fyd5gqatkfgOjKZHkNHiEqIVDkK6Hx2zreKlj0idfFlTbtMKTlLFROTFtCq8oyzlYKRCjSBvEfSP8g46y_SvouXC37uFJ5pm7zN5iYap4l0Brlp2ycIWnBbOgxnE4w-IK9BNnAL4YDf_hQaloZpbwGxjfshAcoq27yT0yO9HosUwd4M9dkuHLTPmRuRD34LxHefPPU5emwiqgftGTkUwPE_On0au0aTEWPW6YiazFOgThuWeDDRghCIMlkxrUprcY7WlvaYWdq-F3amgtTAwjrLOLwBepvtchYCOFWF5KkF08uIkLndMAubxMsre6y6bpJeQZmsZNtzJjAhpHGDh9TiaUZBUrz1m99xFpFxrks4035mKz0ZgyqO-C06ev50BBl588tcufMoqQReyVhFkTg4o3UHdM2OxaeRs1DL13eQ6cU1SthTY-2-LZ-fMXYXS10LOQocwb5DKSdy7zr8CH-PfCkfdsGPm4XFpJIiuDa0ORlpKXmquXEMy8d1buhKa0MawL3u2Yja75qhCTSmhqt13UtuO95P1yre9F9lvY5cPmTirOlsuGjBVR_u4R9WnO6uKtw6kWRnTxwspgEwsGn9jABXXWPqeQueMtJEy4cVyip6yCrTXND-lEFXbXrgLJPHKfzafOApgPTcAcNWOkEvFt4EMJNH__9fJsUOhOX-LA
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3NzhjMTFkNi01MzBlLTRhZWYtODJkZi1mZmFhZmQ5MzIxMjYiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwibmFtZWlkIjoiNzc4YzExZDYtNTMwZS00YWVmLTgyZGYtZmZhYWZkOTMyMTI2Iiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE3MjA4Nzg2ODUsImV4cCI6MTg3NjM5ODY4NSwiaWF0IjoxNzIwODc4Njg1LCJpc3MiOiJZb3VySXNzdWVyIiwiYXVkIjoiWW91ckF1ZGllbmNlIn0.iKMdNz_N2VCCTDh-HeGi4kH85XrzWV34QLESFV7FTyE
 GET {{WebApi_HostAddress}}/api/users
 Authorization: Bearer {{token}}
 Content-Type: application/json
+###
+
+# регистрация нового пользователя
+POST {{WebApi_HostAddress}}/api/account/register
+Content-Type: application/json
+
+{
+  "FullName": "John Doe",
+  "Email": "john.doe@example.com",
+  "Password": "SecurePassword123!",
+  "DriverApproved": false,
+  "Type": 1,
+  "NotificationPreference": 0
+}
+###
+
+# login нового пользователя с выдачей токена
+
+POST {{WebApi_HostAddress}}/api/account/login
+Content-Type: application/json
+
+{
+  "Email":"john.doe@example.com",
+  "Password":"SecurePassword123!"
+}
+###
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NzBlMTU1Ny05NzcxLTRiMWEtYjM0Ni1lNTVmMGMwY2QwYjUiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwibmFtZWlkIjoiOTcwZTE1NTctOTc3MS00YjFhLWIzNDYtZTU1ZjBjMGNkMGI1IiwibmJmIjoxNzIwODc3MzY5LCJleHAiOjE4NzYzOTczNjksImlhdCI6MTcyMDg3NzM2OSwiaXNzIjoiWW91cklzc3VlciIsImF1ZCI6IllvdXJBdWRpZW5jZSJ9.vJvAa-aEyF2NX1tsB8vaIyMWa0fjNgUnx760RuXVCGA
+GET {{WebApi_HostAddress}}/api/users/24767069-21d7-4b5f-a143-8928570d5adb
+Authorization: Bearer {{token}}
+# Content-Type: application/json
 ###

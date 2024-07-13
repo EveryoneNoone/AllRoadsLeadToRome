@@ -8,5 +8,7 @@ namespace Core.Entities
         public bool DriverApproved { get; set; }
         public UserType Type { get; set; }
         public NotificationType NotificationPreference { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

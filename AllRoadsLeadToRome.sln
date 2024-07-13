@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\order\Application\Application.csproj", "{9F011CB0-E376-4B25-AF45-F756FFD9A23F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\services\order\WebApi\WebApi.csproj", "{69B200A6-00F1-4341-952D-819CF5598C38}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1C6FBF8-B2D5-4D47-9512-6EC94165FC4B} = {C1C6FBF8-B2D5-4D47-9512-6EC94165FC4B}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{6DC54DF6-42EA-4F46-A297-1F14C653E75B}"
 EndProject

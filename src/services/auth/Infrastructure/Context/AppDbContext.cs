@@ -17,5 +17,15 @@ public class AppDbContext : IdentityDbContext<User>
         {
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = type, NormalizedName = type.ToUpper() });
         }
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.Property(e => e.FullName).IsRequired();
+            entity.Property(e => e.DriverApproved).HasColumnType("boolean").IsRequired();
+            entity.Property(e => e.Type).IsRequired();
+            entity.Property(e => e.NotificationPreference).IsRequired();
+            entity.Property(e => e.RefreshToken).IsRequired();
+            entity.Property(e => e.RefreshTokenExpiryTime).IsRequired();
+        });
     }
 }

@@ -2,100 +2,112 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 using WebApi.Models;
 
-namespace WebApi.Controllers;
-
-[Route("api/[controller]")]
-[ApiController]
-public class UsersController : ControllerBase
+namespace WebApi.Controllers
 {
-    private readonly UserManager<User> _userManager;
-
-    public UsersController(UserManager<User> userManager)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
     {
-        _userManager = userManager;
-    }
+        private readonly UserManager<User> _userManager;
 
-    [HttpGet]
-    [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> GetUsers()
-    {
-        var users = _userManager.Users;
-        return Ok(users);
-    }
-
-    [HttpGet("{id}")]
-    [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> GetUser(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
+        public UsersController(UserManager<User> userManager)
         {
-            return NotFound();
-        }
-        return Ok(user);
-    }
-
-    [HttpPut("{id}")]
-    [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> PutUser(string id, [FromBody] UpdateUserModel model)
-    {
-        if (id != model.Id)
-        {
-            return BadRequest();
+            _userManager = userManager;
         }
 
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetUsers()
         {
-            return NotFound();
+            var users = _userManager.Users;
+            return Ok(users);
         }
 
-        user.FullName = model.FullName;
-        user.DriverApproved = model.DriverApproved;
-        user.NotificationPreference = model.NotificationPreference;
-        user.Type = model.Type;
-
-        var result = await _userManager.UpdateAsync(user);
-
-        if (result.Succeeded)
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Administrator,Driver,User")]
+        public async Task<IActionResult> GetUser(string id)
         {
-            return NoContent();
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null || (currentUser.Id != id && !User.IsInRole("Administrator")))
+            {
+                return Forbid();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
-        foreach (var error in result.Errors)
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator,Driver,User")]
+        public async Task<IActionResult> PutUser(string id, [FromBody] UpdateUserModel model)
         {
-            ModelState.AddModelError(string.Empty, error.Description);
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null || (currentUser.Id != id && !User.IsInRole("Administrator")))
+            {
+                return Forbid();
+            }
+
+            if (id != model.Id)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.FullName = model.FullName;
+            user.DriverApproved = model.DriverApproved;
+            user.NotificationPreference = model.NotificationPreference;
+            user.Type = model.Type;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
         }
 
-        return BadRequest(ModelState);
-    }
-
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> DeleteUser(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null)
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            return NotFound();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
         }
-
-        var result = await _userManager.DeleteAsync(user);
-
-        if (result.Succeeded)
-        {
-            return NoContent();
-        }
-
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError(string.Empty, error.Description);
-        }
-
-        return BadRequest(ModelState);
     }
 }
