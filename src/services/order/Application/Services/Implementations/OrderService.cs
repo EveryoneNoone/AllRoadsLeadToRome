@@ -34,9 +34,9 @@ public class OrderService : IOrderService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            //throw;
         }
-       
+
         var order = await _orderRepository.Create(request, ct);
         await _orderLogRepository.Create(order, ct);
         return order.Id;

@@ -1,3 +1,4 @@
+using AllRoadsLeadToRome.Core.Auth;
 using AllRoadsLeadToRome.Service.Order.Application;
 using AllRoadsLeadToRome.Service.Order.Infrastructure;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.Context;
@@ -44,24 +45,25 @@ builder.Services.AddGrpcClient<OrderGrpc.OrderGrpcClient>(options =>
         handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
         return handler;
     });
-    // .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-    // {
-    //     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    // });
+// .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+// {
+//     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+// });
 
 
 builder.Services.AddDbContext<OrderDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DB"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OrderDB"));
 });
 
 //builder.Services.AddScoped<OrderDbContext>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+builder.Services.AddCustomSwaggerGen();
+builder.Services.AddCustomAuthentication(builder.Configuration);
 
 ServicesIoC.ConfigureServices(builder.Services);
-InfrastructureConfigureServices.ConfigureServices(builder.Services);
+InfrastructureConfigureServices.ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
@@ -72,6 +74,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
 
 app.MapControllers();
 
