@@ -1,6 +1,7 @@
 ﻿using AllRoadsLeadToRome.Core.Enums;
 using AllRoadsLeadToRome.Service.Order.Application.Dtos;
 using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AllRoadsLeadToRome.Service.Order.WebApi.Controllers;
@@ -38,7 +39,8 @@ public class OrderController : ControllerBase
 
     [
         HttpGet,
-        Route("")
+        Route(""),
+        Authorize(Roles = "Administrator")
     ]
     public async Task<ActionResult<int>> GetAll(CancellationToken ct = default)
     {

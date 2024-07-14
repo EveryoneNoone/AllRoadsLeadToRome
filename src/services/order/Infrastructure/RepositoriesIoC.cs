@@ -1,34 +1,36 @@
-﻿using System.Reflection;
-using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
-using AllRoadsLeadToRome.Service.Order.Infrastructure.Context;
+﻿using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.Repositories.Implementations;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace AllRoadsLeadToRome.Service.Order.Infrastructure;
 
 public static class InfrastructureConfigureServices
 {
-    public static IServiceCollection ConfigureServices(this IServiceCollection services)
+    public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        RegisterMassTransit(services);
+        RegisterMassTransit(services, configuration);
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IOrderLogRepository, OrderLogRepository>();
         return services;
     }
-    
-    private static void RegisterMassTransit(IServiceCollection services)
+
+    private static void RegisterMassTransit(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMassTransit(m=>
+        var rabbitMqSettings = configuration.GetSection("RabbitMQ");
+
+        services.AddMassTransit(m =>
         {
             m.AddConsumers(Assembly.GetExecutingAssembly());
-            m.UsingRabbitMq((ctx,cfg)=>
+            m.UsingRabbitMq((ctx, cfg) =>
             {
-                cfg.Host("localhost","/",c=>
+                cfg.Host(rabbitMqSettings["Host"], "/", c =>
                 {
-                    c.Username("guest");
-                    c.Password("guest");
+                    c.Username(rabbitMqSettings["Username"]);
+                    c.Password(rabbitMqSettings["Password"]);
                 });
                 cfg.ConfigureEndpoints(ctx);
             });
