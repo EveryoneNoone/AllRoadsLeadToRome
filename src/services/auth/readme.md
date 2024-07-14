@@ -25,9 +25,10 @@ docker-compose up --build
 После запуска сервисы будут доступны на следующих портах:
 Swagger: http://localhost:8090
 База данных: localhost:5433 (Порт может быть изменен в соответствии с конфигурацией docker-compose.yml)
-Остановка и Удаление Контейнеров
-Чтобы остановить работающие контейнеры и удалить их, воспользуйтесь следующей командой:
 
+## Остановка и Удаление Контейнеров
+
+Чтобы остановить работающие контейнеры и удалить их, воспользуйтесь следующей командой:
 ```bash
 docker-compose down
 ```
@@ -45,4 +46,24 @@ docker-compose down
 1. Добавить ссылку на проект AllRoadsLeadToRome.Core.Auth. Он содержит два расширяющих метода:
 	- добавление поддержки авторизации
 	- добавление поддержки Bearer аутентификации в Swagger
-2. 
+2. Добавить в WebApi проекте
+```
+builder.Services.AddCustomSwaggerGen();
+builder.Services.AddCustomAuthentication(builder.Configuration);
+```
+3.  После `builder.Build();` добавить 
+```
+app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
+```
+4. В appsettings проекта добавить
+```
+  "JwtSettings": {
+    "Secret": "YourVeryStrongAndLongSecretKey1234567890",
+    "Issuer": "YourIssuer",
+    "Audience": "YourAudience",
+    "AccessTokenExpiration": 1800,
+    "RefreshTokenExpiration": 2592000
+  }
+```
