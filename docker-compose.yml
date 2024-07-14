@@ -9,6 +9,7 @@ services:
 
   mongo:
     image: mongo:latest
+    restart: always
     container_name: mongodb-container
     command: mongod --auth --bind_ip_all
     environment:
@@ -20,6 +21,20 @@ services:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - "27017:27017"
+  
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
  
   authservice_db:
     image: postgres
