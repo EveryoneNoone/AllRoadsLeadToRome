@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using AllRoadsLeadToRome.Core.Auth;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
