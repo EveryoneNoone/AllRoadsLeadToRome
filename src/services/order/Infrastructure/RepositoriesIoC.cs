@@ -1,10 +1,10 @@
-﻿using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
+﻿using AllRoadsLeadToRome.Core.MassTransit.Events;
+using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.Repositories.Implementations;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace AllRoadsLeadToRome.Service.Order.Infrastructure;
 
@@ -31,7 +31,11 @@ public static class InfrastructureConfigureServices
                     c.Username(rabbitMqSettings["Username"]);
                     c.Password(rabbitMqSettings["Password"]);
                 });
-                cfg.ConfigureEndpoints(ctx);
+                //cfg.ConfigureEndpoints(ctx);
+                cfg.Message<OrderStatusChangedEvent>(x =>
+                {
+                    x.SetEntityName("masstransit_event_queue_1"); // Устанавливаем имя очереди
+                });
             });
         });
     }
