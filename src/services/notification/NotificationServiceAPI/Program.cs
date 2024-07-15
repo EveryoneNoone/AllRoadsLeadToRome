@@ -9,129 +9,82 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        //CreateHostBuilder(args).Build().Run();
-
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.        
-
         builder.Services.AddControllers();
-        //Learn more about configuring Swagger / OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        //IConfiguration configuration = new ConfigurationBuilder()
-        //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-        //    .AddEnvironmentVariables()
-        //    .Build();
-
+        // Add MassTransit and configure RabbitMQ
         builder.Services.AddMassTransit(x =>
         {
             x.AddConsumer<ConsumerMessage>();
+            x.AddConsumer<OrderStatusChangedConsumer>();
             x.UsingRabbitMq((context, cfg) =>
             {
-                ConfigureRMQ(cfg, builder.Configuration);
-                RegisterEndpoints(cfg);
+                var rabbitMqSettings = builder.Configuration.GetSection("RMQSettings").Get<RmqSettings>();
+                cfg.Host(new Uri($"rabbitmq://{rabbitMqSettings.Host}"), h =>
+                {
+                    h.Username(rabbitMqSettings.Login);
+                    h.Password(rabbitMqSettings.Password);
+                });
+                cfg.ReceiveEndpoint("masstransit_event_queue_1", e =>
+                {
+                    e.ConfigureConsumer<OrderStatusChangedConsumer>(context);
+                    e.UseMessageRetry(r =>
+                    {
+                        r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+                    });
+                });
             });
         });
-        builder.Services.AddHostedService<HostService>();
 
-        builder.Services.Configure<NotificationDatabaseSettings>(builder.Configuration.GetSection("NotificationStoreDatabase"));
+        //builder.Services.AddHostedService<HostService>();
 
+        // Configure MongoDB settings
+        builder.Services.Configure<NotificationDatabaseSettings>(builder.Configuration.GetSection("NotificationDatabaseSettings"));
         builder.Services.AddSingleton<MongoDBService>();
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        //if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
+        //app.UseAuthorization();
         app.MapControllers();
-
-
         app.Run();
     }
 
-    //private static IHostBuilder CreateHostBuilder(string[] args)
+    ///// <summary>
+    ///// Configure RabbitMQ settings
+    ///// </summary>
+    ///// <param name="configurator"></param>
+    ///// <param name="configuration"></param>
+    //private static void ConfigureRMQ(IRabbitMqBusFactoryConfigurator configurator, IConfiguration configuration)
     //{
-    //    IConfiguration configuration = new ConfigurationBuilder()
-    //        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    //        .AddEnvironmentVariables()
-    //        .Build();
-
-    //    return Host.CreateDefaultBuilder(args)
-    //        .ConfigureWebHostDefaults(webBuilder =>
-    //        {
-    //            webBuilder.ConfigureServices(services =>
-    //            {
-    //                services.AddControllers();
-    //                services.AddEndpointsApiExplorer();
-    //                services.AddSwaggerGen();
-    //            })
-    //            .Configure((hostContext, app) =>
-    //            {
-    //                if (hostContext.HostingEnvironment.IsDevelopment())
-    //                {
-    //                    app.UseSwagger();
-    //                    app.UseSwaggerUI();
-    //                }
-    //                app.UseHttpsRedirection();
-    //                app.UseAuthorization();
-    //                app.Build();
-    //                app.UseEndpoints(endpoints =>
-    //                {
-    //                    endpoints.MapControllers();
-    //                });
-    //            });
-    //        })
-    //        .ConfigureServices((hostContext, services) =>
-    //        {
-    //            services.AddMassTransit(x =>
-    //            {
-    //                x.AddConsumer<ConsumerMessage>();
-    //                x.UsingRabbitMq((context, cfg) =>
-    //                {
-    //                    ConfigureRMQ(cfg, configuration);
-    //                    RegisterEndpoints(cfg);
-    //                });
-    //            });
-    //            services.AddHostedService<HostService>();
-    //        });
+    //    var rabbitMqSettings = configuration.GetSection("RMQSettings").Get<RmqSettings>();
+    //    configurator.Host(new Uri($"rabbitmq://{rabbitMqSettings.Host}"), h =>
+    //    {
+    //        h.Username(rabbitMqSettings.Login);
+    //        h.Password(rabbitMqSettings.Password);
+    //    });
     //}
 
-    /// <summary>
-    /// Для докера host использовать "host.docker.internal"
-    /// </summary>
-    /// <param name="configurator"></param>
-    /// <param name="configuration"></param>
-    private static void ConfigureRMQ(IRabbitMqBusFactoryConfigurator configurator, IConfiguration configuration)
-    {
-        var settings = configuration.Get<ApplicationSettings>().RmqSettings;
-        configurator.Host(settings.Host,
-            settings.VHost,
-            h =>
-            {
-                h.Username(settings.Login);
-                h.Password(settings.Password);
-            });
-    }
-
-    private static void RegisterEndpoints(IRabbitMqBusFactoryConfigurator configurator)
-    {
-        configurator.ReceiveEndpoint($"masstransit_event_queue_1", e =>
-        {
-            e.Consumer<ConsumerMessage>();
-            e.UseMessageRetry(r =>
-            {
-                r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
-            });
-        });
-    }
+    //private static void RegisterEndpoints(IRabbitMqBusFactoryConfigurator configurator)
+    //{
+    //    configurator.ReceiveEndpoint("masstransit_event_queue_1", e =>
+    //    {
+    //        e.Consumer<ConsumerMessage>();
+    //        e.UseMessageRetry(r =>
+    //        {
+    //            r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    //        });
+    //    });
+    //}
 }
