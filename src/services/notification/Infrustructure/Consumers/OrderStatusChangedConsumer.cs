@@ -2,7 +2,7 @@ using AllRoadsLeadToRome.Core.MassTransit.Events;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Consumers;
+namespace Infrustructure.Consumers;
 
 public class OrderStatusChangedConsumer : IConsumer<OrderStatusChangedEvent>
 {

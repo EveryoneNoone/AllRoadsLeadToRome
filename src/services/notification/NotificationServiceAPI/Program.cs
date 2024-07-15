@@ -35,6 +35,8 @@ internal class Program
             });
         });
         builder.Services.AddHostedService<HostService>();
+        
+        builder.Services.ConfigureServices();
 
         builder.Services.Configure<NotificationDatabaseSettings>(builder.Configuration.GetSection("NotificationStoreDatabase"));
 
@@ -107,7 +109,7 @@ internal class Program
     //}
 
     /// <summary>
-    /// Для докера host использовать "host.docker.internal"
+    /// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ host пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "host.docker.internal"
     /// </summary>
     /// <param name="configurator"></param>
     /// <param name="configuration"></param>

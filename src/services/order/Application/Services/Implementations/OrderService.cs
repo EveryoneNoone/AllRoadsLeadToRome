@@ -2,6 +2,7 @@
 using AllRoadsLeadToRome.Service.Order.Application.Dtos;
 using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Application.Services.Interfaces;
+using AuthApi;
 using MassTransit;
 using OrderApi;
 
@@ -11,10 +12,10 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IOrderLogRepository _orderLogRepository;
-    private readonly OrderGrpc.OrderGrpcClient _grpcClient;
+    private readonly AuthGrpc.AuthGrpcClient _grpcClient;
 
     public OrderService(IOrderRepository orderRepository, IOrderLogRepository orderLogRepository,
-        OrderGrpc.OrderGrpcClient grpcClient)
+        AuthGrpc.AuthGrpcClient grpcClient)
     {
         _orderRepository = orderRepository;
         _orderLogRepository = orderLogRepository;
@@ -25,9 +26,9 @@ public class OrderService : IOrderService
     {
         try
         {
-            var response = await _grpcClient.GetOrderAsync(new GetOrderRequest()
+            var response = await _grpcClient.GetUserAsync(new GetUserRequest()
             {
-                Id = 1
+                Id = request.CustomerUserId.ToString()
             });
         }
         catch (Exception e)

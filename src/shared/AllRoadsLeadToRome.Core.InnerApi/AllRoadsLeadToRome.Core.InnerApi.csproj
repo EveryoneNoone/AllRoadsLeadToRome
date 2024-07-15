@@ -11,13 +11,13 @@
     </ItemGroup>
     
     <ItemGroup>
-        <Protobuf Include="Protos\order.proto">
-            <GrpcServices>None</GrpcServices>
-            <Access>Public</Access>
-            <ProtoCompile>True</ProtoCompile>
-            <CompileOutputs>True</CompileOutputs>
-            <OutputDir>Generated/</OutputDir>
-            <Generator>MSBuild:Compile</Generator>
+        <Protobuf Include="Protos\auth.proto">
+          <GrpcServices>Both</GrpcServices>
+          <Access>Public</Access>
+          <ProtoCompile>True</ProtoCompile>
+          <CompileOutputs>True</CompileOutputs>
+          <OutputDir>Generated/</OutputDir>
+          <Generator>MSBuild:Compile</Generator>
         </Protobuf>
         <Protobuf Include="Protos\order.proto">
             <GrpcServices>Both</GrpcServices>
