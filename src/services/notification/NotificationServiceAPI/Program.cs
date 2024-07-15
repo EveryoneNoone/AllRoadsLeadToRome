@@ -20,6 +20,7 @@ internal class Program
         builder.Services.AddMassTransit(x =>
         {
             x.AddConsumer<ConsumerMessage>();
+            //x.AddConsumer<OrderStatusChangedConsumer>();
             x.UsingRabbitMq((context, cfg) =>
             {
                 var rabbitMqSettings = builder.Configuration.GetSection("RMQSettings").Get<RmqSettings>();

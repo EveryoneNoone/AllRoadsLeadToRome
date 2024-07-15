@@ -25,9 +25,9 @@ public class OrderService : IOrderService
     {
         //try
         //{
-        //    var response = await _grpcClient.GetUserAsync(new GetUserRequest()
+        //    var response = await _grpcClient.GetOrderAsync(new GetOrderRequest()
         //    {
-        //        Id = request.CustomerUserId.ToString()
+        //        Id = 1
         //    });
         //}
         //catch (Exception e)

@@ -18,7 +18,7 @@ namespace NotificationServiceAPI.Consumers
         public async Task Consume(ConsumeContext<MessageDto> context)
         {
             var receiver = context.Message;
-         
+
             var template = await _dbService.GetTemplateAsync(receiver.TemplateName, receiver.TypeNotification);
 
             var message = PrepareWorker.PrepareMessage(template.Value, receiver.Content);
