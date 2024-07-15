@@ -1,9 +1,8 @@
-using AllRoadsLeadToRome.Core.MassTransit.Events;
+﻿using AllRoadsLeadToRome.Core.MassTransit.Events;
 using AllRoadsLeadToRome.Core.MassTransit.Messages;
 using MassTransit;
-using Microsoft.Extensions.Logging;
 
-namespace Infrustructure.Consumers;
+namespace NotificationServiceAPI.Consumers;
 
 public class OrderStatusChangedConsumer : IConsumer<MessageDto>
 {
@@ -18,7 +17,7 @@ public class OrderStatusChangedConsumer : IConsumer<MessageDto>
     {
         //_logger.LogInformation(
         //    " [*] Message received Order id: {id} ,Order Status: {newOlderStatus} {customUserId} {deliveryUserId} {oldOrderStatus}",
-        //    context.Message.i
+        //    context.Message.Id,
         //    context.Message.NewOrderStatus,
         //    context.Message.CustomerUserId,
         //    context.Message.DeliveryUserId,

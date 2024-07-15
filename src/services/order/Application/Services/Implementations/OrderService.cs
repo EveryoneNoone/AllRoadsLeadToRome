@@ -12,31 +12,30 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IOrderLogRepository _orderLogRepository;
-    private readonly AuthGrpc.AuthGrpcClient _grpcClient;
+    //private readonly AuthGrpc.AuthGrpcClient _grpcClient;
 
-    public OrderService(IOrderRepository orderRepository, IOrderLogRepository orderLogRepository,
-        AuthGrpc.AuthGrpcClient grpcClient)
+    public OrderService(IOrderRepository orderRepository, IOrderLogRepository orderLogRepository)
     {
         _orderRepository = orderRepository;
         _orderLogRepository = orderLogRepository;
-        _grpcClient = grpcClient;
+        //_grpcClient = grpcClient;
     }
 
     public async Task<int> Create(AddOrderRequestDto request, CancellationToken ct)
     {
-        try
-        {
-            var response = await _grpcClient.GetUserAsync(new GetUserRequest()
-            {
-                Id = request.CustomerUserId.ToString()
-            });
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-       
+        //try
+        //{
+        //    var response = await _grpcClient.GetOrderAsync(new GetOrderRequest()
+        //    {
+        //        Id = 1
+        //    });
+        //}
+        //catch (Exception e)
+        //{
+        //    Console.WriteLine(e);
+        //    //throw;
+        //}
+
         var order = await _orderRepository.Create(request, ct);
         await _orderLogRepository.Create(order, ct);
         return order.Id;

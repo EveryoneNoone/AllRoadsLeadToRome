@@ -1,6 +1,7 @@
 ﻿using AllRoadsLeadToRome.Core.Db;
 using AllRoadsLeadToRome.Core.Enums;
 using AllRoadsLeadToRome.Core.MassTransit.Events;
+using AllRoadsLeadToRome.Core.MassTransit.Messages;
 using AllRoadsLeadToRome.Service.Order.Application.Dtos;
 using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Domain.Entities;
@@ -34,7 +35,7 @@ public class OrderRepository : EntityFrameworkRepository<OrderEntityFrameworkEnt
             CreatedDate = DateTime.UtcNow,
             UpdatedDate = DateTime.UtcNow
         }, ct);
-       
+
         return order;
     }
 
@@ -45,10 +46,14 @@ public class OrderRepository : EntityFrameworkRepository<OrderEntityFrameworkEnt
             entity.UpdatedDate = DateTime.UtcNow;
             entity.Status = newStatus;
         }, ct);
-        await _bus.Publish<OrderStatusChangedEvent>(new 
+        await _bus.Publish<MessageDto>(new MessageDto
         {
-            Id = id,
-            OrderStatus = newStatus
+            Content = new Dictionary<string, string> { { "name", "wdqqwf" } },
+            Receiver = "Test",
+            TemplateName = "Welcome",
+            TypeNotification = Core.MassTransit.Enums.NotificationType.Sms
+            //Id = id,
+            //OrderStatus = newStatus
         }, ct);
     }
 }

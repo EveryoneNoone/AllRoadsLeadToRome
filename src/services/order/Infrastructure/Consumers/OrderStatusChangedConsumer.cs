@@ -3,7 +3,7 @@ using AllRoadsLeadToRome.Core.MassTransit.Messages;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace Infrustructure.Consumers;
+namespace AllRoadsLeadToRome.Service.Order.Infrastructure.Consumers;
 
 public class OrderStatusChangedConsumer : IConsumer<MessageDto>
 {

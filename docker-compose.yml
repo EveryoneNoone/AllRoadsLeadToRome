@@ -2,15 +2,20 @@ version: '3.4'
 
 services:
   notificationserviceapi:
-    image: ${DOCKER_REGISTRY-}notificationserviceapi
+    image: notificationservice/webapi
     build:
       context: .
       dockerfile: src/services/notification/NotificationServiceAPI/Dockerfile
+    ports:
+      - "8089:8080"
+    depends_on: 
+      - rabbit
+      - mongo
 
   mongo:
     image: mongo:latest
     restart: always
-    container_name: mongodb-container
+    container_name: mongo-container
     command: mongod --auth --bind_ip_all
     environment:
       MONGO_INITDB_DATABASE: NotificationStore
@@ -76,17 +81,27 @@ services:
   #     context: .
   #     dockerfile: src/services/order/WebApi/Dockerfile
   #   ports:
-  #     - "8080:80"
+  #     - "8088:8080"
   #   environment:
   #     - ASPNETCORE_ENVIRONMENT=Production
   #     - ConnectionStrings__OrderDB=Host=orderservice_db;Port=5432;Database=orderdb;Username=postgres;Password=123456
-  #     - RabbitMQ__Host=rabbitmq-container
-  #     - RabbitMQ__Username=admin
-  #     - RabbitMQ__Password=password
+  #     - RabbitMQ__Host=rabbitmqhost
+  #     - RabbitMQ__Username=guest
+  #     - RabbitMQ__Password=guest
   #   depends_on:
   #     - orderservice_db
   #     - rabbit
-
+      
+  orderservice_webapi:
+    image: order/webapi
+    build:
+      context: .
+      dockerfile: src/services/order/WebApi/Dockerfile
+    ports:
+      - "8088:8080"
+    depends_on:
+      - orderservice_db
+      - rabbit
 
 volumes:
   mongodb-data:
@@ -94,3 +109,4 @@ volumes:
   postgres_data:
   rabbitmq_data:
   orders_postgres_data:
+
