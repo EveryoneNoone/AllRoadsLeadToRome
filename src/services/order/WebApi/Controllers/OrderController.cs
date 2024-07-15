@@ -19,7 +19,8 @@ public class OrderController : ControllerBase
 
     [
         HttpPost,
-        Route("")
+        Route(""),
+        Authorize(Roles = "Administrator")
     ]
     public async Task<ActionResult<int>> Create([FromBody] AddOrderRequestDto request, CancellationToken ct = default)
     {
@@ -29,7 +30,8 @@ public class OrderController : ControllerBase
 
     [
         HttpGet,
-        Route("{id}")
+        Route("{id}"),
+        Authorize()
     ]
     public async Task<ActionResult<int>> GetById(int id, CancellationToken ct = default)
     {
@@ -50,7 +52,8 @@ public class OrderController : ControllerBase
 
     [
         HttpPatch,
-        Route("{id}/complete")
+        Route("{id}/complete"),
+        Authorize(Roles = "Administrator")
     ]
     public async Task<ActionResult<int>> MakeCompleted(int id, CancellationToken ct = default)
     {
