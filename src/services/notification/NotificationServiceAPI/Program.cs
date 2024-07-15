@@ -23,7 +23,8 @@ internal class Program
             x.UsingRabbitMq((context, cfg) =>
             {
                 var rabbitMqSettings = builder.Configuration.GetSection("RMQSettings").Get<RmqSettings>();
-                cfg.Host(new Uri($"rabbitmq://{rabbitMqSettings.Host}"), h =>
+                cfg.Host(rabbitMqSettings.Host,
+                    rabbitMqSettings.VHost, h =>
                 {
                     h.Username(rabbitMqSettings.Login);
                     h.Password(rabbitMqSettings.Password);

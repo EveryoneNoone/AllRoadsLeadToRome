@@ -15,7 +15,7 @@ services:
   mongo:
     image: mongo:latest
     restart: always
-    container_name: mongodb-container
+    container_name: mongo-container
     command: mongod --auth --bind_ip_all
     environment:
       MONGO_INITDB_DATABASE: NotificationStore
@@ -92,9 +92,16 @@ services:
   #     - orderservice_db
   #     - rabbit
       
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: src/services/order/WebApi/Dockerfile
+
 volumes:
   mongodb-data:
     driver: local  
   postgres_data:
   rabbitmq_data:
   orders_postgres_data:
+
