@@ -1,4 +1,5 @@
 ﻿using AllRoadsLeadToRome.Core.MassTransit.Events;
+using AllRoadsLeadToRome.Core.MassTransit.Messages;
 using AllRoadsLeadToRome.Service.Order.Application.Repositories.Interfaces;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.Repositories.Implementations;
 using MassTransit;
@@ -33,7 +34,7 @@ public static class InfrastructureConfigureServices
                     c.Password(rabbitMqSettings["Password"]);
                 });
                 //cfg.ConfigureEndpoints(ctx);
-                cfg.Message<OrderStatusChangedEvent>(x =>
+                cfg.Message<MessageDto>(x =>
                 {
                     x.SetEntityName("masstransit_event_queue_1"); // Устанавливаем имя очереди
                 });

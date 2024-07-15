@@ -23,18 +23,18 @@ public class OrderService : IOrderService
 
     public async Task<int> Create(AddOrderRequestDto request, CancellationToken ct)
     {
-        try
-        {
-            var response = await _grpcClient.GetOrderAsync(new GetOrderRequest()
-            {
-                Id = 1
-            });
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            //throw;
-        }
+        //try
+        //{
+        //    var response = await _grpcClient.GetOrderAsync(new GetOrderRequest()
+        //    {
+        //        Id = 1
+        //    });
+        //}
+        //catch (Exception e)
+        //{
+        //    Console.WriteLine(e);
+        //    //throw;
+        //}
 
         var order = await _orderRepository.Create(request, ct);
         await _orderLogRepository.Create(order, ct);

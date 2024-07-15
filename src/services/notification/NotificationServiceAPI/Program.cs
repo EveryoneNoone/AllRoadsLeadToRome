@@ -20,7 +20,7 @@ internal class Program
         builder.Services.AddMassTransit(x =>
         {
             x.AddConsumer<ConsumerMessage>();
-            x.AddConsumer<OrderStatusChangedConsumer>();
+            //x.AddConsumer<OrderStatusChangedConsumer>();
             x.UsingRabbitMq((context, cfg) =>
             {
                 var rabbitMqSettings = builder.Configuration.GetSection("RMQSettings").Get<RmqSettings>();
@@ -32,7 +32,8 @@ internal class Program
                 });
                 cfg.ReceiveEndpoint("masstransit_event_queue_1", e =>
                 {
-                    e.ConfigureConsumer<OrderStatusChangedConsumer>(context);
+                    //e.ConfigureConsumer<OrderStatusChangedConsumer>(context);
+                    e.ConfigureConsumer<ConsumerMessage>(context);
                     e.UseMessageRetry(r =>
                     {
                         r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
