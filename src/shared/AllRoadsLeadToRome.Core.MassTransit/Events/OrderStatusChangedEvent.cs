@@ -2,7 +2,7 @@ using AllRoadsLeadToRome.Core.Enums;
 
 namespace AllRoadsLeadToRome.Core.MassTransit.Events;
 
-public class OrderStatusChangedEvent
+public class OrderStatusChangedEventdqwd
 {
     public int Id { get; set; }
     public OrderStatus OldOrderStatus { get; set; }
