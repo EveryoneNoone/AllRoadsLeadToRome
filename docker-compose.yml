@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   notificationserviceapi:
-    image: ${DOCKER_REGISTRY-}notificationserviceapi
+    image: notificationservice/webapi
     build:
       context: .
       dockerfile: src/services/notification/NotificationServiceAPI/Dockerfile
@@ -93,7 +93,7 @@ services:
   #     - rabbit
       
   orderservice_webapi:
-    image: ${DOCKER_REGISTRY-}webapi
+    image: order/webapi
     build:
       context: .
       dockerfile: src/services/order/WebApi/Dockerfile
