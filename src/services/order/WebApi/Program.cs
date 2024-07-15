@@ -3,6 +3,7 @@ using AllRoadsLeadToRome.Service.Order.Application;
 using AllRoadsLeadToRome.Service.Order.Infrastructure;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.Context;
 using AllRoadsLeadToRome.Service.Order.Infrastructure.GrpcServices;
+using AuthApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrderApi;
@@ -34,17 +35,18 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-builder.Services.AddGrpcClient<OrderGrpc.OrderGrpcClient>(options =>
-    {
-        options.Address = new Uri("https://localhost:7243");
-    })
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        var handler = new HttpClientHandler();
-        // Skip SSL certificate validation
-        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-        return handler;
-    });
+//builder.Services.AddGrpcClient<AuthGrpc.AuthGrpcClient>(options =>
+//    {
+//        //options.Address = new Uri("https://localhost:7243");
+//        options.Address = new Uri("https://authservice_webapi:8081");
+//    })
+//    .ConfigurePrimaryHttpMessageHandler(() =>
+//    {
+//        var handler = new HttpClientHandler();
+//        // Skip SSL certificate validation
+//        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+//        return handler;
+//    });
 // .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 // {
 //     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
@@ -80,6 +82,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGrpcService<OrderService>();
+//app.MapGrpcService<OrderService>();
 
 app.Run();
