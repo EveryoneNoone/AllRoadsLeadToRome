@@ -8,7 +8,6 @@ namespace Infrastructure
     {
         public static async Task Initialize(AppDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            // Ensure the database is created
             context.Database.EnsureCreated();
 
             string[] roleNames = { "User", "Driver", "Administrator" };
@@ -21,7 +20,6 @@ namespace Infrastructure
                 }
             }
 
-            // Optionally seed a default admin user
             var adminUser = new User
             {
                 UserName = "admin@example.com",
@@ -29,9 +27,9 @@ namespace Infrastructure
                 FullName = "Admin User",
                 Type = UserType.Administrator,
                 NotificationPreference = NotificationType.Email,
-                DriverApproved = true, // example field, set according to your needs
+                DriverApproved = true,
                 RefreshToken = string.Empty,
-                RefreshTokenExpiryTime = DateTime.UtcNow // Set default value, update as necessary
+                RefreshTokenExpiryTime = DateTime.UtcNow
             };
 
             var adminPassword = "Admin@123";

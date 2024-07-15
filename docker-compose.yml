@@ -9,6 +9,7 @@ services:
 
   mongo:
     image: mongo:latest
+    restart: always
     container_name: mongodb-container
     command: mongod --auth --bind_ip_all
     environment:
@@ -20,6 +21,19 @@ services:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - "27017:27017"
+  
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+    hostname: rabbitmqhost    
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
  
   authservice_db:
     image: postgres
@@ -45,8 +59,38 @@ services:
     depends_on:
       - authservice_db
 
+  orderservice_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: orderdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - orders_postgres_data:/var/lib/postgresql/data 
+ 
+  # orderservice_webapi:
+  #   image: order/webapi
+  #   build:
+  #     context: .
+  #     dockerfile: src/services/order/WebApi/Dockerfile
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - ConnectionStrings__OrderDB=Host=orderservice_db;Port=5432;Database=orderdb;Username=postgres;Password=123456
+  #     - RabbitMQ__Host=rabbitmq-container
+  #     - RabbitMQ__Username=admin
+  #     - RabbitMQ__Password=password
+  #   depends_on:
+  #     - orderservice_db
+  #     - rabbit
+
+
 volumes:
   mongodb-data:
     driver: local  
   postgres_data:
-
+  rabbitmq_data:
+  orders_postgres_data:

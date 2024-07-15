@@ -12,9 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\services\order\Application\Application.csproj", "{9F011CB0-E376-4B25-AF45-F756FFD9A23F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\services\order\WebApi\WebApi.csproj", "{69B200A6-00F1-4341-952D-819CF5598C38}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C1C6FBF8-B2D5-4D47-9512-6EC94165FC4B} = {C1C6FBF8-B2D5-4D47-9512-6EC94165FC4B}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{6DC54DF6-42EA-4F46-A297-1F14C653E75B}"
 EndProject
@@ -50,6 +47,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllRoadsLeadToRome.Core.MassTransit", "src\shared\AllRoadsLeadToRome.Core.MassTransit\AllRoadsLeadToRome.Core.MassTransit.csproj", "{8E6D4223-EDB8-4280-9E75-9BB79E2232CB}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllRoadsLeadToRome.Core.Auth", "src\shared\AllRoadsLeadToRome.Core.Auth\AllRoadsLeadToRome.Core.Auth.csproj", "{F37FC47F-EBB8-47F2-BA7D-03D77C0186FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +120,10 @@ Global
 		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD0A7E3B-FEBE-4483-81C6-F1E7F0AF1628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F37FC47F-EBB8-47F2-BA7D-03D77C0186FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F37FC47F-EBB8-47F2-BA7D-03D77C0186FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F37FC47F-EBB8-47F2-BA7D-03D77C0186FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F37FC47F-EBB8-47F2-BA7D-03D77C0186FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +144,7 @@ Global
 		{7C6EBDAB-7AA0-4385-B377-4478CD71D682} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
 		{E5EEAD19-6E60-49B5-9E16-5DF35BE9B9CB} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
 		{8E6D4223-EDB8-4280-9E75-9BB79E2232CB} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
+		{F37FC47F-EBB8-47F2-BA7D-03D77C0186FE} = {6DC54DF6-42EA-4F46-A297-1F14C653E75B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCC9BF43-D064-43E4-A3F9-9159E535298E}

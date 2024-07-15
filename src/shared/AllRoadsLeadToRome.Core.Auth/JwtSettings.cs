@@ -1,5 +1,4 @@
-﻿namespace WebApi;
-
+﻿namespace AllRoadsLeadToRome.Core.Auth;
 public class JwtSettings
 {
     public string Secret { get; set; }
